@@ -10,7 +10,7 @@ const Header: React.FC = () => {
         <div className="flex items-center justify-between">
           <Link to="/" className="flex items-center space-x-3">
             <Droplet className="h-8 w-8" />
-            <span className="text-2xl font-bold">Swim Forecast Buddy</span>
+            <span className="text-2xl font-bold">Schwimmbad Prognose</span>
           </Link>
           
           <nav>
@@ -20,7 +20,7 @@ const Header: React.FC = () => {
                   to="/" 
                   className="text-white hover:text-water-100 transition-colors"
                 >
-                  Dashboard
+                  Übersicht
                 </Link>
               </li>
               <li>

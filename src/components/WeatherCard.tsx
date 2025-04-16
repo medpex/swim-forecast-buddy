@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { WeatherData } from '@/lib/types';
@@ -9,7 +8,7 @@ interface WeatherCardProps {
   title?: string;
 }
 
-const WeatherCard: React.FC<WeatherCardProps> = ({ weather, title = "Current Weather" }) => {
+const WeatherCard: React.FC<WeatherCardProps> = ({ weather, title = "Aktuelles Wetter" }) => {
   // Map OpenWeather icon codes to Lucide icons
   const getWeatherIcon = (iconCode: string) => {
     const iconMap: Record<string, React.ReactNode> = {
@@ -45,13 +44,13 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ weather, title = "Current Wea
         <div className="flex flex-col items-center">
           {getWeatherIcon(weather.icon)}
           <h2 className="mt-2 text-3xl font-bold">{Math.round(weather.temp)}°C</h2>
-          <p className="text-muted-foreground">Feels like: {Math.round(weather.feels_like)}°C</p>
+          <p className="text-muted-foreground">Gefühlt wie: {Math.round(weather.feels_like)}°C</p>
           <p className="mt-1 font-medium capitalize">{weather.description}</p>
         </div>
         
         <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
           <div className="flex flex-col">
-            <span className="text-muted-foreground">Humidity</span>
+            <span className="text-muted-foreground">Luftfeuchtigkeit</span>
             <span className="font-medium">{weather.humidity}%</span>
           </div>
           
@@ -61,13 +60,13 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ weather, title = "Current Wea
           </div>
           
           <div className="flex flex-col">
-            <span className="text-muted-foreground">Precipitation</span>
+            <span className="text-muted-foreground">Niederschlag</span>
             <span className="font-medium">{weather.precipitation} mm</span>
           </div>
           
           <div className="flex flex-col">
-            <span className="text-muted-foreground">Date</span>
-            <span className="font-medium">{new Date(weather.date).toLocaleDateString()}</span>
+            <span className="text-muted-foreground">Datum</span>
+            <span className="font-medium">{new Date(weather.date).toLocaleDateString('de-DE')}</span>
           </div>
         </div>
       </CardContent>

@@ -53,7 +53,7 @@ const WeatherForecastTable: React.FC<WeatherForecastTableProps> = ({ forecast })
             <TableRow>
               <TableHead>Datum</TableHead>
               <TableHead>Wetter</TableHead>
-              <TableHead>Temp.</TableHead>
+              <TableHead>Temperatur</TableHead>
               <TableHead>Gefühlt</TableHead>
               <TableHead>Niederschlag</TableHead>
               <TableHead>Wind</TableHead>

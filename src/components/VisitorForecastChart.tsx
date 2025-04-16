@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { 
   AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, 
@@ -68,7 +67,7 @@ const VisitorForecastChart: React.FC<VisitorForecastChartProps> = ({
                 formatter={(value, name) => {
                   if (name === 'visitors') return [`${value} Besucher`, 'Prognose'];
                   if (name === 'lower') return [`${value} Besucher`, 'Untere Grenze'];
-                  if (name === 'upper') return [`${value} Besucher`, 'Obere Grenze'];
+                  if (name === 'upper') return [`${value} Besucher', 'Obere Grenze'];
                   return [value, name];
                 }} 
                 labelFormatter={(label) => `Datum: ${label}`}
