@@ -2,6 +2,8 @@ import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import RecentVisitorsChart from '@/components/RecentVisitorsChart';
 import { calculateAverageVisitors } from '@/lib/utils';
+import { isWinterBreak, formatDate } from '@/lib/utils/dateUtils';
+import WinterBreakBanner from '@/components/WinterBreakBanner';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Calendar, Users, Award, Droplet } from 'lucide-react';
@@ -13,7 +15,7 @@ const Historical: React.FC = () => {
     queryKey: ['historicalVisitors'],
     queryFn: fetchHistoricalData,
   });
-  
+
   if (isLoading) {
     return <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-8">Historische Besucherdaten</h1>
@@ -54,24 +56,23 @@ const Historical: React.FC = () => {
   )[0];
   
   // Format date
-  const formatDate = (dateStr: string) => {
-    return new Intl.DateTimeFormat('de-DE', {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    }).format(new Date(dateStr));
-  };
+  
   
   // Count days by type
   const weekendDays = data.filter(day => day.is_weekend).length;
   const holidayDays = data.filter(day => day.is_holiday).length;
   const specialEventDays = data.filter(day => day.special_event).length;
+
+  const data = visitorData || [];
+  const currentDate = new Date();
+  const isCurrentlyWinterBreak = isWinterBreak(currentDate);
   
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-8">Historische Besucherdaten</h1>
       
+      {isCurrentlyWinterBreak && <WinterBreakBanner />}
+
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
         <Card>
           <CardHeader className="pb-2">
@@ -154,7 +155,7 @@ const Historical: React.FC = () => {
           averageVisitors={avgVisitors}
         />
       </div>
-      
+
       <Card className="mb-8">
         <CardHeader>
           <CardTitle>Detaillierte Besucherdaten</CardTitle>
@@ -175,39 +176,47 @@ const Historical: React.FC = () => {
             <TableBody>
               {[...data]
                 .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-                .map((day) => (
-                <TableRow key={day.date}>
-                  <TableCell className="font-medium">
-                    {new Date(day.date).toLocaleDateString('de-DE')}
-                  </TableCell>
-                  <TableCell>{day.day_of_week}</TableCell>
-                  <TableCell className="font-bold">{day.visitor_count}</TableCell>
-                  <TableCell>
-                    {day.is_holiday ? 
-                      <span className="text-success">Ja</span> : 
-                      <span className="text-muted-foreground">Nein</span>
-                    }
-                  </TableCell>
-                  <TableCell>
-                    {day.is_weekend ? 
-                      <span className="text-water-600">Ja</span> : 
-                      <span className="text-muted-foreground">Nein</span>
-                    }
-                  </TableCell>
-                  <TableCell>
-                    {day.is_school_break ? 
-                      <span className="text-water-600">Ja</span> : 
-                      <span className="text-muted-foreground">Nein</span>
-                    }
-                  </TableCell>
-                  <TableCell>
-                    {day.special_event ? 
-                      <span className="text-warning">{day.special_event}</span> : 
-                      <span className="text-muted-foreground">-</span>
-                    }
-                  </TableCell>
-                </TableRow>
-              ))}
+                .map((day) => {
+                  const dayDate = new Date(day.date);
+                  const isBreak = isWinterBreak(dayDate);
+                  
+                  return (
+                    <TableRow key={day.date} className={isBreak ? 'bg-gray-50' : ''}>
+                      <TableCell className="font-medium">
+                        {formatDate(day.date)}
+                        {isBreak && (
+                          <span className="ml-2 text-xs text-blue-600">(Winterpause)</span>
+                        )}
+                      </TableCell>
+                      <TableCell>{day.day_of_week}</TableCell>
+                      <TableCell className="font-bold">{day.visitor_count}</TableCell>
+                      <TableCell>
+                        {day.is_holiday ? 
+                          <span className="text-success">Ja</span> : 
+                          <span className="text-muted-foreground">Nein</span>
+                        }
+                      </TableCell>
+                      <TableCell>
+                        {day.is_weekend ? 
+                          <span className="text-water-600">Ja</span> : 
+                          <span className="text-muted-foreground">Nein</span>
+                        }
+                      </TableCell>
+                      <TableCell>
+                        {day.is_school_break ? 
+                          <span className="text-water-600">Ja</span> : 
+                          <span className="text-muted-foreground">Nein</span>
+                        }
+                      </TableCell>
+                      <TableCell>
+                        {day.special_event ? 
+                          <span className="text-warning">{day.special_event}</span> : 
+                          <span className="text-muted-foreground">-</span>
+                        }
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
             </TableBody>
           </Table>
         </CardContent>
