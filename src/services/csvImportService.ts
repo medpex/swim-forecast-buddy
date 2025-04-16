@@ -1,3 +1,4 @@
+
 import { supabase } from "@/integrations/supabase/client";
 import Papa from 'papaparse';
 
@@ -18,6 +19,26 @@ interface WeatherCSVRow {
   condition: string;
 }
 
+/**
+ * Convert a date from DD.MM.YYYY [HH:MM] format to YYYY-MM-DD
+ */
+const formatDate = (dateString: string): string => {
+  // Check if dateString contains date and time (e.g., "16.04.2025 08:54")
+  if (dateString.includes(' ')) {
+    dateString = dateString.split(' ')[0]; // Extract only the date part
+  }
+  
+  // Parse DD.MM.YYYY to YYYY-MM-DD
+  const parts = dateString.split('.');
+  if (parts.length === 3) {
+    const [day, month, year] = parts;
+    return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+  }
+  
+  // If already in YYYY-MM-DD format or another valid format, return as is
+  return dateString;
+};
+
 export const importVisitorData = async (file: File): Promise<{ success: boolean; message: string }> => {
   return new Promise((resolve) => {
     Papa.parse(file, {
@@ -27,7 +48,7 @@ export const importVisitorData = async (file: File): Promise<{ success: boolean;
           const data = (results.data as VisitorCSVRow[])
             .filter(row => row.date && row.count)
             .map(row => ({
-              date: row.date,
+              date: formatDate(row.date),
               visitor_count: parseInt(row.count, 10),
               day_of_week: row.day_of_week || null,
               is_weekend: row.is_weekend === '1',
@@ -83,7 +104,7 @@ export const importWeatherData = async (file: File): Promise<{ success: boolean;
           const data = (results.data as WeatherCSVRow[])
             .filter(row => row.date && row.temperature && row.condition)
             .map(row => ({
-              date: row.date,
+              date: formatDate(row.date),
               temperature: parseFloat(row.temperature),
               condition: row.condition,
               created_at: new Date().toISOString()
