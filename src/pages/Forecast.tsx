@@ -1,49 +1,89 @@
-
 import React from 'react';
+import { useQuery } from '@tanstack/react-query';
 import VisitorForecastChart from '@/components/VisitorForecastChart';
 import WeatherForecastTable from '@/components/WeatherForecastTable';
 import WeatherCard from '@/components/WeatherCard';
+import { fetchCurrentWeather, fetchWeatherForecast } from '@/services/weatherService';
 import { 
-  mockCurrentWeather, 
-  mockWeatherForecast, 
   mockVisitorForecast,
   mockHistoricalData
 } from '@/lib/mock-data';
 import { calculateAverageVisitors } from '@/lib/utils';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { InfoIcon } from 'lucide-react';
+import { AlertCircle, InfoIcon } from 'lucide-react';
 
 const Forecast: React.FC = () => {
-  // Calculate average visitors from historical data
+  const apiKey = localStorage.getItem('openWeatherApiKey');
   const avgVisitors = calculateAverageVisitors(mockHistoricalData);
+  
+  const { data: currentWeather, error: weatherError } = useQuery({
+    queryKey: ['currentWeather', apiKey],
+    queryFn: () => fetchCurrentWeather(apiKey || ''),
+    enabled: !!apiKey,
+  });
+
+  const { data: weatherForecast } = useQuery({
+    queryKey: ['weatherForecast', apiKey],
+    queryFn: () => fetchWeatherForecast(apiKey || ''),
+    enabled: !!apiKey,
+  });
+
+  // Update visitor forecasts with real weather data
+  const updatedVisitorForecast = weatherForecast 
+    ? mockVisitorForecast.map((forecast, index) => ({
+        ...forecast,
+        weather_forecast: weatherForecast[index]
+      }))
+    : mockVisitorForecast;
   
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-8">Besucherprognose & Wettervorhersage</h1>
+      
+      {!apiKey && (
+        <Alert variant="destructive" className="mb-6">
+          <AlertCircle className="h-4 w-4" />
+          <AlertTitle>API-Schlüssel fehlt</AlertTitle>
+          <AlertDescription>
+            Bitte tragen Sie einen OpenWeather API-Schlüssel in den Einstellungen ein.
+          </AlertDescription>
+        </Alert>
+      )}
+
+      {weatherError && (
+        <Alert variant="destructive" className="mb-6">
+          <AlertCircle className="h-4 w-4" />
+          <AlertTitle>API-Fehler</AlertTitle>
+          <AlertDescription>
+            Fehler beim Abrufen der Wetterdaten. Bitte überprüfen Sie Ihren API-Schlüssel.
+          </AlertDescription>
+        </Alert>
+      )}
       
       <Alert className="mb-6 bg-water-50 border-water-300">
         <InfoIcon className="h-4 w-4 text-water-600" />
         <AlertTitle>Über unsere Prognose</AlertTitle>
         <AlertDescription>
           Die Prognose basiert auf historischen Besucherdaten, aktuellen Wetterbedingungen und
-          weiteren Faktoren wie Wochentag und besonderen Events. Die angegebenen Konfidenzintervalle 
-          zeigen die mögliche Abweichung.
+          weiteren Faktoren wie Wochentag und besonderen Events.
         </AlertDescription>
       </Alert>
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <div className="md:col-span-2">
           <VisitorForecastChart 
-            forecasts={mockVisitorForecast} 
+            forecasts={updatedVisitorForecast}
             historicalAverage={avgVisitors}
           />
         </div>
         <div>
-          <WeatherCard 
-            weather={mockCurrentWeather} 
-            title="Aktuelles Wetter"
-          />
+          {currentWeather && (
+            <WeatherCard 
+              weather={currentWeather}
+              title="Aktuelles Wetter"
+            />
+          )}
           
           <Card className="mt-6">
             <CardHeader>
@@ -78,7 +118,9 @@ const Forecast: React.FC = () => {
         </div>
       </div>
       
-      <WeatherForecastTable forecast={mockWeatherForecast} />
+      {weatherForecast && (
+        <WeatherForecastTable forecast={weatherForecast} />
+      )}
       
       <Card className="mt-8">
         <CardHeader>
