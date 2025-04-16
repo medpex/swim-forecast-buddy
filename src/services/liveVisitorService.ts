@@ -18,22 +18,18 @@ export const scrapeLiveVisitors = async () => {
 }
 
 export const fetchLatestLiveVisitorCount = async () => {
-  // Use the generic version of from to bypass type checking
-  // since our types file hasn't been updated yet
-  const { data, error } = await supabase
+  // We need to use this approach to bypass type checking until the types file is updated
+  const response = await (supabase as any)
     .from('live_visitor_counts')
     .select('visitor_count, timestamp')
     .order('timestamp', { ascending: false })
     .limit(1)
-    .single() as unknown as { 
-      data: { visitor_count: number, timestamp: string } | null, 
-      error: any 
-    }
+    .single();
 
-  if (error) {
-    console.error('Error fetching latest visitor count:', error)
+  if (response.error) {
+    console.error('Error fetching latest visitor count:', response.error)
     return null
   }
 
-  return data
+  return response.data
 }
