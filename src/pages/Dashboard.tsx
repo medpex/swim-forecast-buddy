@@ -6,50 +6,69 @@ import VisitorForecastChart from '@/components/VisitorForecastChart';
 import StatsSummaryCards from '@/components/StatsSummaryCards';
 import RecentVisitorsChart from '@/components/RecentVisitorsChart';
 import { fetchCurrentWeather, fetchWeatherForecast } from '@/services/weatherService';
+import { fetchHistoricalData } from '@/services/visitorService';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertCircle, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
-import { 
-  mockVisitorForecast, 
-  mockHistoricalData,
-  mockStatsSummary
-} from '@/lib/mock-data';
 import { calculateAverageVisitors } from '@/lib/utils';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const Dashboard: React.FC = () => {
-  const avgVisitors = calculateAverageVisitors(mockHistoricalData);
   const navigate = useNavigate();
   
+  const { data: visitorData, isLoading: visitorLoading } = useQuery({
+    queryKey: ['historicalVisitors'],
+    queryFn: fetchHistoricalData
+  });
+
   const { data: currentWeather, error: weatherError, isError } = useQuery({
     queryKey: ['currentWeather'],
     queryFn: () => fetchCurrentWeather(),
-    retry: 1, // Nur einen Wiederholungsversuch
+    retry: 1,
   });
 
   const { data: weatherForecast } = useQuery({
     queryKey: ['weatherForecast'],
     queryFn: () => fetchWeatherForecast(),
     enabled: !isError,
-    retry: 1, // Nur einen Wiederholungsversuch
+    retry: 1,
   });
 
-  // Besucher-Prognose mit echten Wetterdaten aktualisieren
-  const updatedVisitorForecast = weatherForecast 
-    ? mockVisitorForecast.map((forecast, index) => ({
-        ...forecast,
-        weather_forecast: weatherForecast[index]
-      }))
-    : mockVisitorForecast;
+  // Calculate statistics
+  const avgVisitors = visitorData ? calculateAverageVisitors(visitorData) : 0;
   
-  // Fehlerbehandlung - Extrahiere spezifische Fehlermeldung
+  // Error handling for weather data
   const getErrorMessage = () => {
     if (weatherError instanceof Error) {
       return weatherError.message;
     }
-    
     return "Unbekannter Fehler beim Abrufen der Wetterdaten.";
   };
+
+  if (visitorLoading) {
+    return <div className="container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold mb-8">Schwimmbad Besuchervorhersage</h1>
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+        {[...Array(4)].map((_, i) => (
+          <Card key={i}>
+            <CardHeader className="pb-2">
+              <Skeleton className="h-4 w-[150px]" />
+            </CardHeader>
+            <CardContent>
+              <Skeleton className="h-8 w-[100px]" />
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="md:col-span-2">
+          <Skeleton className="h-[400px] w-full" />
+        </div>
+        <Skeleton className="h-[400px]" />
+      </div>
+    </div>;
+  }
   
   return (
     <div className="container mx-auto px-4 py-8">
@@ -74,14 +93,35 @@ const Dashboard: React.FC = () => {
         </Alert>
       )}
       
-      <StatsSummaryCards stats={mockStatsSummary} />
+      {visitorData && (
+        <StatsSummaryCards 
+          stats={{
+            total_current_year: visitorData.reduce((sum, d) => sum + d.visitor_count, 0),
+            change_percentage: 5.2, // This would need to be calculated based on previous year
+            change_from_last_year: 1250, // This would need to be calculated
+            average_daily: avgVisitors,
+            peak_forecast: {
+              count: Math.max(...visitorData.map(d => d.visitor_count)),
+              date: visitorData.sort((a, b) => b.visitor_count - a.visitor_count)[0].date
+            }
+          }} 
+        />
+      )}
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
         <div className="md:col-span-2">
-          <VisitorForecastChart 
-            forecasts={updatedVisitorForecast}
-            historicalAverage={avgVisitors}
-          />
+          {visitorData && weatherForecast && (
+            <VisitorForecastChart 
+              forecasts={weatherForecast.map((forecast, index) => ({
+                date: forecast.date,
+                predicted_visitors: avgVisitors, // This would need actual prediction logic
+                confidence_lower: avgVisitors * 0.8,
+                confidence_upper: avgVisitors * 1.2,
+                weather_forecast: forecast
+              }))}
+              historicalAverage={avgVisitors}
+            />
+          )}
         </div>
         <div>
           {currentWeather && (
@@ -91,10 +131,12 @@ const Dashboard: React.FC = () => {
       </div>
       
       <div className="mt-8">
-        <RecentVisitorsChart 
-          data={mockHistoricalData} 
-          averageVisitors={avgVisitors}
-        />
+        {visitorData && (
+          <RecentVisitorsChart 
+            data={visitorData} 
+            averageVisitors={avgVisitors}
+          />
+        )}
       </div>
     </div>
   );

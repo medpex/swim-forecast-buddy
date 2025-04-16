@@ -1,54 +1,64 @@
-
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import VisitorForecastChart from '@/components/VisitorForecastChart';
 import WeatherForecastTable from '@/components/WeatherForecastTable';
 import WeatherCard from '@/components/WeatherCard';
 import { fetchCurrentWeather, fetchWeatherForecast } from '@/services/weatherService';
-import { 
-  mockVisitorForecast,
-  mockHistoricalData
-} from '@/lib/mock-data';
+import { fetchHistoricalData } from '@/services/visitorService';
 import { calculateAverageVisitors } from '@/lib/utils';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { AlertCircle, InfoIcon, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const Forecast: React.FC = () => {
-  const avgVisitors = calculateAverageVisitors(mockHistoricalData);
   const navigate = useNavigate();
+  
+  const { data: visitorData, isLoading: visitorLoading } = useQuery({
+    queryKey: ['historicalVisitors'],
+    queryFn: fetchHistoricalData
+  });
+
+  const avgVisitors = visitorData ? calculateAverageVisitors(visitorData) : 0;
   
   const { data: currentWeather, error: weatherError, isError } = useQuery({
     queryKey: ['currentWeather'],
     queryFn: () => fetchCurrentWeather(),
-    retry: 1, // Nur einen Wiederholungsversuch
+    retry: 1,
   });
 
   const { data: weatherForecast } = useQuery({
     queryKey: ['weatherForecast'],
     queryFn: () => fetchWeatherForecast(),
-    enabled: !isError, // Nur wenn kein Fehler beim aktuellen Wetter auftrat
-    retry: 1, // Nur einen Wiederholungsversuch
+    enabled: !isError,
+    retry: 1,
   });
 
-  // Besucher-Prognose mit echten Wetterdaten aktualisieren
-  const updatedVisitorForecast = weatherForecast 
-    ? mockVisitorForecast.map((forecast, index) => ({
-        ...forecast,
-        weather_forecast: weatherForecast[index]
-      }))
-    : mockVisitorForecast;
-  
-  // Fehlerbehandlung - Extrahiere spezifische Fehlermeldung
+  // Error handling
   const getErrorMessage = () => {
     if (weatherError instanceof Error) {
       return weatherError.message;
     }
-    
     return "Unbekannter Fehler beim Abrufen der Wetterdaten.";
   };
+
+  if (visitorLoading) {
+    return <div className="container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold mb-8">Besucherprognose & Wettervorhersage</h1>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <div className="md:col-span-2">
+          <Skeleton className="h-[400px] w-full" />
+        </div>
+        <div>
+          <Skeleton className="h-[200px] w-full" />
+          <Skeleton className="h-[200px] w-full mt-6" />
+        </div>
+      </div>
+      <Skeleton className="h-[400px] w-full" />
+    </div>;
+  }
   
   return (
     <div className="container mx-auto px-4 py-8">
@@ -84,10 +94,18 @@ const Forecast: React.FC = () => {
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         <div className="md:col-span-2">
-          <VisitorForecastChart 
-            forecasts={updatedVisitorForecast}
-            historicalAverage={avgVisitors}
-          />
+          {visitorData && weatherForecast && (
+            <VisitorForecastChart 
+              forecasts={weatherForecast.map((forecast, index) => ({
+                date: forecast.date,
+                predicted_visitors: avgVisitors, // This would need actual prediction logic
+                confidence_lower: avgVisitors * 0.8,
+                confidence_upper: avgVisitors * 1.2,
+                weather_forecast: forecast
+              }))}
+              historicalAverage={avgVisitors}
+            />
+          )}
         </div>
         <div>
           {currentWeather && (

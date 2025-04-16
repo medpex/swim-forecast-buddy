@@ -1,18 +1,55 @@
-
 import React from 'react';
+import { useQuery } from '@tanstack/react-query';
 import RecentVisitorsChart from '@/components/RecentVisitorsChart';
-import { mockHistoricalData } from '@/lib/mock-data';
 import { calculateAverageVisitors } from '@/lib/utils';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Calendar, Users, Award, Droplet } from 'lucide-react';
+import { fetchHistoricalData } from '@/services/visitorService';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const Historical: React.FC = () => {
-  // Calculate average visitors from historical data
-  const avgVisitors = calculateAverageVisitors(mockHistoricalData);
+  const { data: visitorData, isLoading, error } = useQuery({
+    queryKey: ['historicalVisitors'],
+    queryFn: fetchHistoricalData,
+  });
+  
+  if (isLoading) {
+    return <div className="container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold mb-8">Historische Besucherdaten</h1>
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+        {[...Array(4)].map((_, i) => (
+          <Card key={i}>
+            <CardHeader className="pb-2">
+              <Skeleton className="h-4 w-[150px]" />
+            </CardHeader>
+            <CardContent>
+              <Skeleton className="h-8 w-[100px]" />
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+      <Skeleton className="h-[400px] w-full mb-8" />
+      <Skeleton className="h-[600px] w-full" />
+    </div>;
+  }
+
+  if (error) {
+    return <div className="container mx-auto px-4 py-8">
+      <h1 className="text-3xl font-bold mb-8">Historische Besucherdaten</h1>
+      <Card className="bg-destructive/10">
+        <CardContent className="p-4">
+          <p className="text-destructive">Fehler beim Laden der Daten</p>
+        </CardContent>
+      </Card>
+    </div>;
+  }
+
+  const data = visitorData || [];
+  const avgVisitors = calculateAverageVisitors(data);
   
   // Find the peak day
-  const peakDay = [...mockHistoricalData].sort((a, b) => 
+  const peakDay = [...data].sort((a, b) => 
     b.visitor_count - a.visitor_count
   )[0];
   
@@ -27,9 +64,9 @@ const Historical: React.FC = () => {
   };
   
   // Count days by type
-  const weekendDays = mockHistoricalData.filter(day => day.is_weekend).length;
-  const holidayDays = mockHistoricalData.filter(day => day.is_holiday).length;
-  const specialEventDays = mockHistoricalData.filter(day => day.special_event).length;
+  const weekendDays = data.filter(day => day.is_weekend).length;
+  const holidayDays = data.filter(day => day.is_holiday).length;
+  const specialEventDays = data.filter(day => day.special_event).length;
   
   return (
     <div className="container mx-auto px-4 py-8">
@@ -113,7 +150,7 @@ const Historical: React.FC = () => {
       
       <div className="mb-8">
         <RecentVisitorsChart 
-          data={mockHistoricalData} 
+          data={data} 
           averageVisitors={avgVisitors}
         />
       </div>
@@ -136,7 +173,7 @@ const Historical: React.FC = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {[...mockHistoricalData]
+              {[...data]
                 .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
                 .map((day) => (
                 <TableRow key={day.date}>
