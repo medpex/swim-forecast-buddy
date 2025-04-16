@@ -118,20 +118,7 @@ const Settings = () => {
 
         <div className="grid gap-6 mt-8">
           <h2 className="text-xl font-semibold">Daten Import</h2>
-          <div className="grid gap-6 md:grid-cols-2">
-            <CSVImport
-              type="visitors"
-              title="Besucherdaten importieren"
-              description="Laden Sie eine CSV-Datei mit historischen Besucherdaten hoch. 
-                         Die Datei sollte die Spalten 'date' und 'count' enthalten."
-            />
-            <CSVImport
-              type="weather"
-              title="Wetterdaten importieren"
-              description="Laden Sie eine CSV-Datei mit historischen Wetterdaten hoch. 
-                         Die Datei sollte die Spalten 'date', 'temperature' und 'condition' enthalten."
-            />
-          </div>
+          <CSVImport />
         </div>
       </div>
     </div>

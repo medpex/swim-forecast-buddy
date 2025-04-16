@@ -4,15 +4,9 @@ import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Upload } from 'lucide-react';
 import { useToast } from './ui/use-toast';
-import { importVisitorData, importWeatherData } from '@/services/csvImportService';
+import { importWeatherData } from '@/services/csvImportService';
 
-interface CSVImportProps {
-  type: 'visitors' | 'weather';
-  title: string;
-  description: string;
-}
-
-const CSVImport: React.FC<CSVImportProps> = ({ type, title, description }) => {
+const CSVImport: React.FC = () => {
   const { toast } = useToast();
   const fileInputRef = React.useRef<HTMLInputElement>(null);
 
@@ -21,8 +15,7 @@ const CSVImport: React.FC<CSVImportProps> = ({ type, title, description }) => {
     if (!file) return;
 
     try {
-      const importFn = type === 'visitors' ? importVisitorData : importWeatherData;
-      const result = await importFn(file);
+      const result = await importWeatherData(file);
 
       toast({
         title: result.success ? 'Import erfolgreich' : 'Import fehlgeschlagen',
@@ -46,11 +39,14 @@ const CSVImport: React.FC<CSVImportProps> = ({ type, title, description }) => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{title}</CardTitle>
+        <CardTitle>Wetterdaten importieren</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          <p className="text-sm text-muted-foreground">{description}</p>
+          <p className="text-sm text-muted-foreground">
+            Laden Sie eine CSV-Datei mit historischen Wetterdaten hoch. 
+            Die Datei sollte die Spalten 'date', 'temperature' und 'condition' enthalten.
+          </p>
           <div className="flex items-center gap-4">
             <input
               ref={fileInputRef}
@@ -58,7 +54,7 @@ const CSVImport: React.FC<CSVImportProps> = ({ type, title, description }) => {
               accept=".csv"
               onChange={handleFileChange}
               className="hidden"
-              id={`${type}-csv-upload`}
+              id="weather-csv-upload"
             />
             <Button 
               variant="outline" 
