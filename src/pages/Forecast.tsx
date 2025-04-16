@@ -3,6 +3,8 @@ import { useQuery } from '@tanstack/react-query';
 import VisitorForecastChart from '@/components/VisitorForecastChart';
 import WeatherForecastTable from '@/components/WeatherForecastTable';
 import WeatherCard from '@/components/WeatherCard';
+import WinterBreakAlert from '@/components/WinterBreakAlert';
+import LiveVisitorCount from '@/components/LiveVisitorCount';
 import { fetchCurrentWeather, fetchWeatherForecast } from '@/services/weatherService';
 import { fetchHistoricalData } from '@/services/visitorService';
 import { calculateAverageVisitors } from '@/lib/utils';
@@ -36,7 +38,6 @@ const Forecast: React.FC = () => {
     retry: 1,
   });
 
-  // Error handling
   const getErrorMessage = () => {
     if (weatherError instanceof Error) {
       return weatherError.message;
@@ -64,6 +65,10 @@ const Forecast: React.FC = () => {
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-8">Besucherprognose & Wettervorhersage</h1>
       
+      <WinterBreakAlert />
+      
+      <LiveVisitorCount />
+      
       {isError && (
         <Alert variant="destructive" className="mb-6">
           <AlertCircle className="h-4 w-4" />
@@ -85,10 +90,11 @@ const Forecast: React.FC = () => {
       
       <Alert className="mb-6 bg-water-50 border-water-300">
         <InfoIcon className="h-4 w-4 text-water-600" />
-        <AlertTitle>Über unsere Prognose</AlertTitle>
+        <AlertTitle>Hinweis zur Prognose während der Winterpause</AlertTitle>
         <AlertDescription>
-          Die Prognose basiert auf historischen Besucherdaten, aktuellen Wetterbedingungen und
-          weiteren Faktoren wie Wochentag und besonderen Events.
+          Während der Winterpause zeigen wir Ihnen die durchschnittlichen Besucherzahlen 
+          der letzten Saison sowie die aktuellen Wetterbedingungen an. Die genauen Prognosen 
+          werden wieder verfügbar sein, sobald das Bad öffnet.
         </AlertDescription>
       </Alert>
       
@@ -96,11 +102,11 @@ const Forecast: React.FC = () => {
         <div className="md:col-span-2">
           {visitorData && weatherForecast && (
             <VisitorForecastChart 
-              forecasts={weatherForecast.map((forecast, index) => ({
+              forecasts={weatherForecast.map((forecast) => ({
                 date: forecast.date,
-                predicted_visitors: avgVisitors, // This would need actual prediction logic
-                confidence_lower: avgVisitors * 0.8,
-                confidence_upper: avgVisitors * 1.2,
+                predicted_visitors: 0,
+                confidence_lower: 0,
+                confidence_upper: 0,
                 weather_forecast: forecast
               }))}
               historicalAverage={avgVisitors}
@@ -115,32 +121,24 @@ const Forecast: React.FC = () => {
             />
           )}
           
-          {/* Behält bestehende Einflussfaktoren-Karte bei */}
           <Card className="mt-6">
             <CardHeader>
-              <CardTitle>Einflussfaktoren</CardTitle>
+              <CardTitle>Information zur Winterpause</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 <div>
-                  <h3 className="font-medium">Temperatur</h3>
+                  <h3 className="font-medium">Öffnungszeiten</h3>
                   <p className="text-sm text-muted-foreground">
-                    Bei höheren Temperaturen steigt die Besucherzahl. Ab ca. 25°C 
-                    ist ein deutlicher Anstieg zu verzeichnen.
+                    Das Freizeitbad ist während der Winterpause geschlossen. 
+                    Die neue Saison beginnt voraussichtlich im Mai 2025.
                   </p>
                 </div>
                 <div>
-                  <h3 className="font-medium">Niederschlag</h3>
+                  <h3 className="font-medium">Letzte Saison</h3>
                   <p className="text-sm text-muted-foreground">
-                    Regen reduziert die Besucherzahlen deutlich. Selbst bei hohen 
-                    Temperaturen führt Niederschlag zu weniger Besuchern.
-                  </p>
-                </div>
-                <div>
-                  <h3 className="font-medium">Wochentag & Ferien</h3>
-                  <p className="text-sm text-muted-foreground">
-                    An Wochenenden und in Schulferien sind die Besucherzahlen 
-                    grundsätzlich höher als an regulären Wochentagen.
+                    In der vergangenen Saison hatten wir durchschnittlich {avgVisitors} 
+                    Besucher pro Tag während der Öffnungszeiten.
                   </p>
                 </div>
               </div>
@@ -153,23 +151,21 @@ const Forecast: React.FC = () => {
         <WeatherForecastTable forecast={weatherForecast} />
       )}
       
-      {/* Behält bestehende Modelldetails-Karte bei */}
       <Card className="mt-8">
         <CardHeader>
-          <CardTitle>Modelldetails</CardTitle>
+          <CardTitle>Hinweise zu den Prognosen</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <h3 className="font-medium mb-2">Machine-Learning-Modell</h3>
+              <h3 className="font-medium mb-2">Berechnung der Prognosen</h3>
               <p className="text-muted-foreground text-sm mb-4">
-                Das Prognosemodell nutzt eine Kombination aus Zeitreihenanalyse und 
-                Regressionsverfahren, um zukünftige Besucherzahlen vorherzusagen.
+                Während der Winterpause werden keine aktiven Besucherprognosen erstellt. 
+                Die hier gezeigten Werte basieren auf historischen Daten der letzten Saison.
               </p>
               
-              <h4 className="font-medium">Berücksichtigte Faktoren:</h4>
+              <h4 className="font-medium">Einflussfaktoren:</h4>
               <ul className="list-disc list-inside text-sm text-muted-foreground">
-                <li>Historische Besucherzahlen</li>
                 <li>Temperatur und Wetterbedingungen</li>
                 <li>Wochentag und Monat</li>
                 <li>Feiertage und Schulferien</li>
@@ -178,29 +174,21 @@ const Forecast: React.FC = () => {
             </div>
             
             <div>
-              <h3 className="font-medium mb-2">Modellgenauigkeit</h3>
+              <h3 className="font-medium mb-2">Saisonale Informationen</h3>
               <p className="text-muted-foreground text-sm mb-4">
-                Die Genauigkeit wird fortlaufend evaluiert und das Modell regelmäßig 
-                neu trainiert. Die Konfidenzintervalle geben eine Einschätzung der Unsicherheit.
+                Das Freibad ist saisonal geöffnet und nutzt die Winterpause für 
+                Wartungsarbeiten und Vorbereitungen auf die neue Saison.
               </p>
               
-              <h4 className="font-medium">Leistungskennzahlen:</h4>
+              <h4 className="font-medium">Wichtige Termine:</h4>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <div className="text-sm text-muted-foreground">MAE</div>
-                  <div className="font-medium">42 Besucher</div>
+                  <div className="text-sm text-muted-foreground">Saisonende 2024</div>
+                  <div className="font-medium">September 2024</div>
                 </div>
                 <div>
-                  <div className="text-sm text-muted-foreground">RMSE</div>
-                  <div className="font-medium">68 Besucher</div>
-                </div>
-                <div>
-                  <div className="text-sm text-muted-foreground">R²</div>
-                  <div className="font-medium">0.82</div>
-                </div>
-                <div>
-                  <div className="text-sm text-muted-foreground">Genauigkeit</div>
-                  <div className="font-medium">85%</div>
+                  <div className="text-sm text-muted-foreground">Saisonstart 2025</div>
+                  <div className="font-medium">Mai 2025</div>
                 </div>
               </div>
             </div>
