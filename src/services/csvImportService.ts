@@ -1,10 +1,15 @@
-
 import { supabase } from "@/integrations/supabase/client";
 import Papa from 'papaparse';
 
 interface VisitorCSVRow {
   date: string;
   count: string;
+  day_of_week: string;
+  is_weekend: string;
+  is_holiday: string;
+  is_school_break: string;
+  special_event?: string;
+  created_at?: string;
 }
 
 interface WeatherCSVRow {
@@ -24,7 +29,12 @@ export const importVisitorData = async (file: File): Promise<{ success: boolean;
             .map(row => ({
               date: row.date,
               visitor_count: parseInt(row.count, 10),
-              created_at: new Date().toISOString()
+              day_of_week: row.day_of_week || null,
+              is_weekend: row.is_weekend === '1',
+              is_holiday: row.is_holiday === '1',
+              is_school_break: row.is_school_break === '1',
+              special_event: row.special_event || null,
+              created_at: row.created_at || new Date().toISOString()
             }));
 
           if (data.length === 0) {
