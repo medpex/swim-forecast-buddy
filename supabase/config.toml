@@ -1,1 +1,5 @@
+
 project_id = "jmffthhljotqgupedhkt"
+
+[functions.scrape-live-visitors]
+verify_jwt = false

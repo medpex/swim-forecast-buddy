@@ -18,9 +18,12 @@ serve(async (req) => {
     const response = await fetch('https://www.freizeitbad-geesthacht.de/startseite')
     const html = await response.text()
 
-    // Extract visitor count (this is a placeholder - actual implementation depends on the website's HTML structure)
+    // Extract visitor count using regex to find the number after "Aktuelle Besucheranzahl"
+    // This pattern might need adjustment based on the actual HTML structure
     const visitorCountMatch = html.match(/Aktuelle Besucheranzahl\s*(\d+)/)
     const visitorCount = visitorCountMatch ? parseInt(visitorCountMatch[1], 10) : 0
+
+    console.log('Extracted visitor count:', visitorCount)
 
     // Create Supabase client
     const supabase = createClient(
@@ -33,7 +36,10 @@ serve(async (req) => {
       .from('live_visitor_counts')
       .insert({ visitor_count: visitorCount })
 
-    if (error) throw error
+    if (error) {
+      console.error('Error inserting visitor count:', error)
+      throw error
+    }
 
     return new Response(JSON.stringify({ visitorCount }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
