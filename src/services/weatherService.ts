@@ -1,4 +1,3 @@
-
 interface OpenWeatherResponse {
   main: {
     temp: number;
@@ -23,11 +22,20 @@ interface ForecastResponse {
 }
 
 const BASE_URL = "https://api.openweathermap.org/data/2.5";
+const DEFAULT_CITY = "Berlin,DE";
 
-export const fetchCurrentWeather = async (apiKey: string, city = "Berlin,DE") => {
+export const getLocationQuery = () => {
+  const postalCode = localStorage.getItem('poolPostalCode');
+  return postalCode 
+    ? `zip=${postalCode},DE` 
+    : `q=${DEFAULT_CITY}`;
+};
+
+export const fetchCurrentWeather = async (apiKey: string) => {
   try {
+    const locationQuery = getLocationQuery();
     const response = await fetch(
-      `${BASE_URL}/weather?q=${city}&units=metric&appid=${apiKey}`
+      `${BASE_URL}/weather?${locationQuery}&units=metric&appid=${apiKey}`
     );
     
     if (!response.ok) {
@@ -52,10 +60,11 @@ export const fetchCurrentWeather = async (apiKey: string, city = "Berlin,DE") =>
   }
 };
 
-export const fetchWeatherForecast = async (apiKey: string, city = "Berlin,DE") => {
+export const fetchWeatherForecast = async (apiKey: string) => {
   try {
+    const locationQuery = getLocationQuery();
     const response = await fetch(
-      `${BASE_URL}/forecast?q=${city}&units=metric&appid=${apiKey}`
+      `${BASE_URL}/forecast?${locationQuery}&units=metric&appid=${apiKey}`
     );
 
     if (!response.ok) {
@@ -64,7 +73,6 @@ export const fetchWeatherForecast = async (apiKey: string, city = "Berlin,DE") =
 
     const data: ForecastResponse = await response.json();
     
-    // Group forecasts by day and take the middle of the day forecast (around 12:00)
     const dailyForecasts = data.list.reduce((acc: any, forecast) => {
       const date = forecast.dt_txt.split(' ')[0];
       if (!acc[date]) {
