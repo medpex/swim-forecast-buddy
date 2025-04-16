@@ -53,11 +53,23 @@ export const fetchYearlyComparisons = async (): Promise<YearlyComparison[]> => {
       monthlyVisitors[month] = monthData.reduce((sum, d) => sum + d.visitor_count, 0);
     });
 
+    // Find the peak day for this year
+    const peakDay = yearData.length > 0 
+      ? yearData.reduce((max, current) => 
+          max.visitor_count > current.visitor_count ? max : current, 
+          yearData[0]
+        )
+      : { date: `${year}-01-01`, visitor_count: 0 };
+
     return {
       year,
       total_visitors: yearData.reduce((sum, d) => sum + d.visitor_count, 0),
       average_daily: Math.round(yearData.reduce((sum, d) => sum + d.visitor_count, 0) / 
         (yearData.length || 1)),
+      peak_day: {
+        date: peakDay.date,
+        count: peakDay.visitor_count
+      },
       months: monthlyVisitors
     };
   });

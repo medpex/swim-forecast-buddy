@@ -13,6 +13,7 @@ import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 import { calculateAverageVisitors } from '@/lib/utils';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Card, CardHeader, CardContent, CardTitle } from '@/components/ui/card';
 
 const Dashboard: React.FC = () => {
   const navigate = useNavigate();
