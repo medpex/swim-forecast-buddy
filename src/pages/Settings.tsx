@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,15 +7,15 @@ import { useForm } from "react-hook-form";
 import * as z from "zod";
 import { Upload, Key, Save, MapPin } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
-
 const settingsFormSchema = z.object({
   openWeatherApiKey: z.string().min(1, "API Key wird benötigt"),
   postalCode: z.string().regex(/^\d{5}$/, "Bitte geben Sie eine gültige 5-stellige Postleitzahl ein"),
   csvFile: z.any().optional()
 });
-
 const Settings = () => {
-  const { toast } = useToast();
+  const {
+    toast
+  } = useToast();
   const form = useForm<z.infer<typeof settingsFormSchema>>({
     resolver: zodResolver(settingsFormSchema),
     defaultValues: {
@@ -24,17 +23,14 @@ const Settings = () => {
       postalCode: localStorage.getItem('poolPostalCode') || ''
     }
   });
-
   const onSubmit = (data: z.infer<typeof settingsFormSchema>) => {
     localStorage.setItem('openWeatherApiKey', data.openWeatherApiKey);
     localStorage.setItem('poolPostalCode', data.postalCode);
-    
     toast({
       title: "Einstellungen gespeichert",
       description: "Die Einstellungen wurden erfolgreich gespeichert."
     });
   };
-
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -49,20 +45,16 @@ const Settings = () => {
       reader.readAsText(file);
     }
   };
-
-  return (
-    <div className="container mx-auto py-8">
+  return <div className="container mx-auto py-8">
       <h1 className="text-2xl font-bold mb-6">Einstellungen</h1>
       
       <div className="grid gap-8">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             {/* Bestehende API-Key Eingabe */}
-            <FormField 
-              control={form.control} 
-              name="openWeatherApiKey" 
-              render={({ field }) => (
-                <FormItem>
+            <FormField control={form.control} name="openWeatherApiKey" render={({
+            field
+          }) => <FormItem>
                   <FormLabel>OpenWeather API Key</FormLabel>
                   <FormControl>
                     <div className="flex gap-2">
@@ -77,26 +69,17 @@ const Settings = () => {
                     Der API Key wird für die Wettervorhersage benötigt.
                   </FormDescription>
                   <FormMessage />
-                </FormItem>
-              )} 
-            />
+                </FormItem>} />
 
             {/* Neue Postleitzahl Eingabe */}
-            <FormField 
-              control={form.control} 
-              name="postalCode" 
-              render={({ field }) => (
-                <FormItem>
+            <FormField control={form.control} name="postalCode" render={({
+            field
+          }) => <FormItem>
                   <FormLabel>Postleitzahl des Schwimmbads</FormLabel>
                   <FormControl>
                     <div className="flex gap-2">
-                      <Input 
-                        placeholder="z.B. 12345" 
-                        {...field} 
-                        className="flex-grow" 
-                        maxLength={5}
-                      />
-                      <Button type="submit" className="w-24">
+                      <Input placeholder="z.B. 12345" {...field} className="flex-grow" maxLength={5} />
+                      <Button type="submit" className="w-24 my-0 py-0 px-[68px]">
                         <MapPin className="mr-2" />
                         Speichern
                       </Button>
@@ -106,9 +89,7 @@ const Settings = () => {
                     Die Postleitzahl wird zur Bestimmung des Wetters verwendet.
                   </FormDescription>
                   <FormMessage />
-                </FormItem>
-              )} 
-            />
+                </FormItem>} />
           </form>
         </Form>
 
@@ -127,8 +108,6 @@ const Settings = () => {
           </p>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default Settings;
