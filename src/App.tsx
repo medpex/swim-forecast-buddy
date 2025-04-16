@@ -9,6 +9,7 @@ import Forecast from "./pages/Forecast";
 import Comparison from "./pages/Comparison";
 import NotFound from "./pages/NotFound";
 import Header from "./components/Header";
+import Settings from "./pages/Settings";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +27,7 @@ const App = () => (
               <Route path="/historical" element={<Historical />} />
               <Route path="/forecast" element={<Forecast />} />
               <Route path="/comparison" element={<Comparison />} />
+              <Route path="/settings" element={<Settings />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </main>

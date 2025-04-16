@@ -1,7 +1,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Droplet } from 'lucide-react';
+import { Droplet, Settings } from 'lucide-react';
 
 const Header: React.FC = () => {
   return (
@@ -45,6 +45,15 @@ const Header: React.FC = () => {
                   className="text-white hover:text-water-100 transition-colors"
                 >
                   Vergleich
+                </Link>
+              </li>
+              <li>
+                <Link 
+                  to="/settings" 
+                  className="text-white hover:text-water-100 transition-colors flex items-center gap-2"
+                >
+                  <Settings className="h-4 w-4" />
+                  Einstellungen
                 </Link>
               </li>
             </ul>
