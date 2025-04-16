@@ -55,15 +55,11 @@ const Historical: React.FC = () => {
     b.visitor_count - a.visitor_count
   )[0];
   
-  // Format date
-  
-  
   // Count days by type
   const weekendDays = data.filter(day => day.is_weekend).length;
   const holidayDays = data.filter(day => day.is_holiday).length;
   const specialEventDays = data.filter(day => day.special_event).length;
 
-  const data = visitorData || [];
   const currentDate = new Date();
   const isCurrentlyWinterBreak = isWinterBreak(currentDate);
   
