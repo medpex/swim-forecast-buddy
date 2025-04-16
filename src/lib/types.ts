@@ -58,3 +58,9 @@ export interface StatsSummary {
     count: number;
   };
 }
+
+// Live visitor count type
+export interface LiveVisitorCount {
+  count: number;
+  timestamp: string;
+}

@@ -1,10 +1,9 @@
-
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import WeatherCard from '@/components/WeatherCard';
 import VisitorForecastChart from '@/components/VisitorForecastChart';
 import StatsSummaryCards from '@/components/StatsSummaryCards';
-import RecentVisitorsChart from '@/components/RecentVisitorsChart';
+import LiveVisitorCount from '@/components/LiveVisitorCount';
 import { fetchCurrentWeather, fetchWeatherForecast } from '@/services/weatherService';
 import { fetchHistoricalData } from '@/services/visitorService';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -15,7 +14,6 @@ import { calculateAverageVisitors } from '@/lib/utils';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Card, CardHeader, CardContent, CardTitle } from '@/components/ui/card';
 
-// Define the getErrorMessage function that was missing
 const getErrorMessage = () => {
   return "Es gab ein Problem beim Abrufen der Wetterdaten. Bitte überprüfen Sie Ihre API-Einstellungen.";
 };
@@ -41,10 +39,8 @@ const Dashboard: React.FC = () => {
     retry: 1,
   });
 
-  // Calculate statistics
   const avgVisitors = visitorData ? calculateAverageVisitors(visitorData) : 0;
   
-  // Get last year's total
   const lastYearTotal = visitorData 
     ? visitorData
         .filter(d => new Date(d.date).getFullYear() === 2024)
@@ -52,27 +48,29 @@ const Dashboard: React.FC = () => {
     : 0;
   
   if (visitorLoading) {
-    return <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">Schwimmbad Besuchervorhersage</h1>
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-        {[...Array(4)].map((_, i) => (
-          <Card key={i}>
-            <CardHeader className="pb-2">
-              <Skeleton className="h-4 w-[150px]" />
-            </CardHeader>
-            <CardContent>
-              <Skeleton className="h-8 w-[100px]" />
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="md:col-span-2">
-          <Skeleton className="h-[400px] w-full" />
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-3xl font-bold mb-8">Schwimmbad Besuchervorhersage</h1>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+          {[...Array(5)].map((_, i) => (
+            <Card key={i}>
+              <CardHeader className="pb-2">
+                <Skeleton className="h-4 w-[150px]" />
+              </CardHeader>
+              <CardContent>
+                <Skeleton className="h-8 w-[100px]" />
+              </CardContent>
+            </Card>
+          ))}
         </div>
-        <Skeleton className="h-[400px]" />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="md:col-span-2">
+            <Skeleton className="h-[400px] w-full" />
+          </div>
+          <Skeleton className="h-[400px]" />
+        </div>
       </div>
-    </div>;
+    );
   }
   
   return (
@@ -98,21 +96,28 @@ const Dashboard: React.FC = () => {
         </Alert>
       )}
       
-      {visitorData && (
-        <StatsSummaryCards 
-          stats={{
-            total_current_year: 0, // Always 0 during winter break
-            total_last_year: lastYearTotal,
-            change_percentage: 0,
-            change_from_last_year: 0,
-            average_daily: avgVisitors,
-            peak_forecast: {
-              count: Math.max(...visitorData.map(d => d.visitor_count)),
-              date: visitorData.sort((a, b) => b.visitor_count - a.visitor_count)[0].date
-            }
-          }} 
-        />
-      )}
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8">
+        <div className="md:col-span-1">
+          <LiveVisitorCount />
+        </div>
+        <div className="md:col-span-4">
+          {visitorData && (
+            <StatsSummaryCards 
+              stats={{
+                total_current_year: 0,
+                total_last_year: lastYearTotal,
+                change_percentage: 0,
+                change_from_last_year: 0,
+                average_daily: avgVisitors,
+                peak_forecast: {
+                  count: Math.max(...visitorData.map(d => d.visitor_count)),
+                  date: visitorData.sort((a, b) => b.visitor_count - a.visitor_count)[0].date
+                }
+              }} 
+            />
+          )}
+        </div>
+      </div>
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
         <div className="md:col-span-2">
@@ -120,9 +125,9 @@ const Dashboard: React.FC = () => {
             <VisitorForecastChart 
               forecasts={weatherForecast.map((forecast, index) => ({
                 date: forecast.date,
-                predicted_visitors: avgVisitors, // This would need actual prediction logic
-                confidence_lower: avgVisitors * 0.8,
-                confidence_upper: avgVisitors * 1.2,
+                predicted_visitors: 0,
+                confidence_lower: 0,
+                confidence_upper: 0,
                 weather_forecast: forecast
               }))}
               historicalAverage={avgVisitors}
@@ -134,15 +139,6 @@ const Dashboard: React.FC = () => {
             <WeatherCard weather={currentWeather} title="Aktuelles Wetter" />
           )}
         </div>
-      </div>
-      
-      <div className="mt-8">
-        {visitorData && (
-          <RecentVisitorsChart 
-            data={visitorData} 
-            averageVisitors={avgVisitors}
-          />
-        )}
       </div>
     </div>
   );
