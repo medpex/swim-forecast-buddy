@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,10 +5,11 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
-import { Upload, MapPin, Save } from "lucide-react";
+import { MapPin } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { getSettings, updateSettings } from "@/services/settingsService";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import CSVImport from '@/components/CSVImport';
 
 const settingsFormSchema = z.object({
   postalCode: z.string().regex(/^\d{5}$/, "Bitte geben Sie eine gültige 5-stellige Postleitzahl ein"),
@@ -86,7 +86,6 @@ const Settings = () => {
       <div className="grid gap-8">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            {/* Neue Postleitzahl Eingabe */}
             <FormField
               control={form.control}
               name="postalCode"
@@ -117,24 +116,22 @@ const Settings = () => {
           </form>
         </Form>
 
-        {/* CSV Upload Bereich */}
-        <div className="space-y-4">
-          <h2 className="text-xl font-semibold">CSV Daten Import</h2>
-          <div className="flex items-center gap-4">
-            <Input
-              type="file"
-              accept=".csv"
-              onChange={handleFileUpload}
-              className="max-w-md"
+        <div className="grid gap-6 mt-8">
+          <h2 className="text-xl font-semibold">Daten Import</h2>
+          <div className="grid gap-6 md:grid-cols-2">
+            <CSVImport
+              type="visitors"
+              title="Besucherdaten importieren"
+              description="Laden Sie eine CSV-Datei mit historischen Besucherdaten hoch. 
+                         Die Datei sollte die Spalten 'date' und 'count' enthalten."
             />
-            <Button variant="outline">
-              <Upload className="mr-2" />
-              Hochladen
-            </Button>
+            <CSVImport
+              type="weather"
+              title="Wetterdaten importieren"
+              description="Laden Sie eine CSV-Datei mit historischen Wetterdaten hoch. 
+                         Die Datei sollte die Spalten 'date', 'temperature' und 'condition' enthalten."
+            />
           </div>
-          <p className="text-sm text-muted-foreground">
-            Laden Sie hier Ihre historischen Besucherdaten als CSV-Datei hoch.
-          </p>
         </div>
       </div>
     </div>
