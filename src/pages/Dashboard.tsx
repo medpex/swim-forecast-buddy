@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import WeatherCard from '@/components/WeatherCard';
@@ -13,6 +14,11 @@ import { useNavigate } from 'react-router-dom';
 import { calculateAverageVisitors } from '@/lib/utils';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Card, CardHeader, CardContent, CardTitle } from '@/components/ui/card';
+
+// Define the getErrorMessage function that was missing
+const getErrorMessage = () => {
+  return "Es gab ein Problem beim Abrufen der Wetterdaten. Bitte überprüfen Sie Ihre API-Einstellungen.";
+};
 
 const Dashboard: React.FC = () => {
   const navigate = useNavigate();

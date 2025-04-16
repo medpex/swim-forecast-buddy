@@ -1,4 +1,3 @@
-
 import { WeatherData, VisitorData, VisitorForecast, YearlyComparison, StatsSummary } from './types';
 
 // Mock current weather data
@@ -128,6 +127,7 @@ export const mockYearlyComparison: YearlyComparison[] = [2021, 2022, 2023, 2024]
 // Mock stats summary
 export const mockStatsSummary: StatsSummary = {
   total_current_year: 178500,
+  total_last_year: 166000,
   change_from_last_year: 12500,
   change_percentage: 7.5,
   average_daily: 489,
