@@ -17,22 +17,19 @@ import { Button } from '@/components/ui/button';
 import { useNavigate } from 'react-router-dom';
 
 const Forecast: React.FC = () => {
-  const apiKey = localStorage.getItem('openWeatherApiKey');
-  const postalCode = localStorage.getItem('poolPostalCode');
   const avgVisitors = calculateAverageVisitors(mockHistoricalData);
   const navigate = useNavigate();
   
   const { data: currentWeather, error: weatherError, isError } = useQuery({
-    queryKey: ['currentWeather', apiKey, postalCode],
-    queryFn: () => fetchCurrentWeather(apiKey || ''),
-    enabled: !!apiKey,
+    queryKey: ['currentWeather'],
+    queryFn: () => fetchCurrentWeather(),
     retry: 1, // Nur einen Wiederholungsversuch
   });
 
   const { data: weatherForecast } = useQuery({
-    queryKey: ['weatherForecast', apiKey, postalCode],
-    queryFn: () => fetchWeatherForecast(apiKey || ''),
-    enabled: !!apiKey && !isError, // Nur wenn kein Fehler beim aktuellen Wetter auftrat
+    queryKey: ['weatherForecast'],
+    queryFn: () => fetchWeatherForecast(),
+    enabled: !isError, // Nur wenn kein Fehler beim aktuellen Wetter auftrat
     retry: 1, // Nur einen Wiederholungsversuch
   });
 
@@ -46,10 +43,6 @@ const Forecast: React.FC = () => {
   
   // Fehlerbehandlung - Extrahiere spezifische Fehlermeldung
   const getErrorMessage = () => {
-    if (!apiKey) {
-      return "API-Schlüssel fehlt. Bitte tragen Sie einen OpenWeather API-Schlüssel in den Einstellungen ein.";
-    }
-    
     if (weatherError instanceof Error) {
       return weatherError.message;
     }
@@ -61,7 +54,7 @@ const Forecast: React.FC = () => {
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-8">Besucherprognose & Wettervorhersage</h1>
       
-      {(!apiKey || isError) && (
+      {isError && (
         <Alert variant="destructive" className="mb-6">
           <AlertCircle className="h-4 w-4" />
           <AlertTitle>API-Fehler</AlertTitle>
