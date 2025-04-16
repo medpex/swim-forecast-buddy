@@ -1,4 +1,3 @@
-
 // Types for the Swim Forecast Buddy application
 
 // Weather data types
@@ -50,6 +49,7 @@ export interface YearlyComparison {
 // Stats summary
 export interface StatsSummary {
   total_current_year: number;
+  total_last_year: number;
   change_from_last_year: number;
   change_percentage: number;
   average_daily: number;

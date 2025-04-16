@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import WeatherCard from '@/components/WeatherCard';
@@ -39,14 +38,13 @@ const Dashboard: React.FC = () => {
   // Calculate statistics
   const avgVisitors = visitorData ? calculateAverageVisitors(visitorData) : 0;
   
-  // Error handling for weather data
-  const getErrorMessage = () => {
-    if (weatherError instanceof Error) {
-      return weatherError.message;
-    }
-    return "Unbekannter Fehler beim Abrufen der Wetterdaten.";
-  };
-
+  // Get last year's total
+  const lastYearTotal = visitorData 
+    ? visitorData
+        .filter(d => new Date(d.date).getFullYear() === 2024)
+        .reduce((sum, d) => sum + d.visitor_count, 0)
+    : 0;
+  
   if (visitorLoading) {
     return <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-8">Schwimmbad Besuchervorhersage</h1>
@@ -97,9 +95,10 @@ const Dashboard: React.FC = () => {
       {visitorData && (
         <StatsSummaryCards 
           stats={{
-            total_current_year: visitorData.reduce((sum, d) => sum + d.visitor_count, 0),
-            change_percentage: 5.2, // This would need to be calculated based on previous year
-            change_from_last_year: 1250, // This would need to be calculated
+            total_current_year: 0, // Always 0 during winter break
+            total_last_year: lastYearTotal,
+            change_percentage: 0,
+            change_from_last_year: 0,
             average_daily: avgVisitors,
             peak_forecast: {
               count: Math.max(...visitorData.map(d => d.visitor_count)),
