@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
 import VisitorForecastChart from '@/components/VisitorForecastChart';
@@ -11,25 +12,31 @@ import {
 import { calculateAverageVisitors } from '@/lib/utils';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { AlertCircle, InfoIcon } from 'lucide-react';
+import { AlertCircle, InfoIcon, Settings } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { useNavigate } from 'react-router-dom';
 
 const Forecast: React.FC = () => {
   const apiKey = localStorage.getItem('openWeatherApiKey');
+  const postalCode = localStorage.getItem('poolPostalCode');
   const avgVisitors = calculateAverageVisitors(mockHistoricalData);
+  const navigate = useNavigate();
   
-  const { data: currentWeather, error: weatherError } = useQuery({
-    queryKey: ['currentWeather', apiKey],
+  const { data: currentWeather, error: weatherError, isError } = useQuery({
+    queryKey: ['currentWeather', apiKey, postalCode],
     queryFn: () => fetchCurrentWeather(apiKey || ''),
     enabled: !!apiKey,
+    retry: 1, // Nur einen Wiederholungsversuch
   });
 
   const { data: weatherForecast } = useQuery({
-    queryKey: ['weatherForecast', apiKey],
+    queryKey: ['weatherForecast', apiKey, postalCode],
     queryFn: () => fetchWeatherForecast(apiKey || ''),
-    enabled: !!apiKey,
+    enabled: !!apiKey && !isError, // Nur wenn kein Fehler beim aktuellen Wetter auftrat
+    retry: 1, // Nur einen Wiederholungsversuch
   });
 
-  // Update visitor forecasts with real weather data
+  // Besucher-Prognose mit echten Wetterdaten aktualisieren
   const updatedVisitorForecast = weatherForecast 
     ? mockVisitorForecast.map((forecast, index) => ({
         ...forecast,
@@ -37,26 +44,38 @@ const Forecast: React.FC = () => {
       }))
     : mockVisitorForecast;
   
+  // Fehlerbehandlung - Extrahiere spezifische Fehlermeldung
+  const getErrorMessage = () => {
+    if (!apiKey) {
+      return "API-Schlüssel fehlt. Bitte tragen Sie einen OpenWeather API-Schlüssel in den Einstellungen ein.";
+    }
+    
+    if (weatherError instanceof Error) {
+      return weatherError.message;
+    }
+    
+    return "Unbekannter Fehler beim Abrufen der Wetterdaten.";
+  };
+  
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-8">Besucherprognose & Wettervorhersage</h1>
       
-      {!apiKey && (
-        <Alert variant="destructive" className="mb-6">
-          <AlertCircle className="h-4 w-4" />
-          <AlertTitle>API-Schlüssel fehlt</AlertTitle>
-          <AlertDescription>
-            Bitte tragen Sie einen OpenWeather API-Schlüssel in den Einstellungen ein.
-          </AlertDescription>
-        </Alert>
-      )}
-
-      {weatherError && (
+      {(!apiKey || isError) && (
         <Alert variant="destructive" className="mb-6">
           <AlertCircle className="h-4 w-4" />
           <AlertTitle>API-Fehler</AlertTitle>
-          <AlertDescription>
-            Fehler beim Abrufen der Wetterdaten. Bitte überprüfen Sie Ihren API-Schlüssel.
+          <AlertDescription className="flex flex-col gap-4">
+            <div>{getErrorMessage()}</div>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              onClick={() => navigate('/settings')}
+              className="self-start"
+            >
+              <Settings className="mr-2 h-4 w-4" />
+              Zu den Einstellungen
+            </Button>
           </AlertDescription>
         </Alert>
       )}
@@ -85,6 +104,7 @@ const Forecast: React.FC = () => {
             />
           )}
           
+          {/* Behält bestehende Einflussfaktoren-Karte bei */}
           <Card className="mt-6">
             <CardHeader>
               <CardTitle>Einflussfaktoren</CardTitle>
@@ -122,6 +142,7 @@ const Forecast: React.FC = () => {
         <WeatherForecastTable forecast={weatherForecast} />
       )}
       
+      {/* Behält bestehende Modelldetails-Karte bei */}
       <Card className="mt-8">
         <CardHeader>
           <CardTitle>Modelldetails</CardTitle>
