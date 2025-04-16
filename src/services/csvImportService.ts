@@ -23,20 +23,27 @@ interface WeatherCSVRow {
  * Convert a date from DD.MM.YYYY [HH:MM] format to YYYY-MM-DD
  */
 const formatDate = (dateString: string): string => {
-  // Check if dateString contains date and time (e.g., "16.04.2025 08:54")
-  if (dateString.includes(' ')) {
-    dateString = dateString.split(' ')[0]; // Extract only the date part
+  try {
+    // Check if dateString contains date and time (e.g., "16.04.2025 08:54")
+    if (dateString.includes(' ')) {
+      dateString = dateString.split(' ')[0]; // Extract only the date part
+    }
+    
+    // Parse DD.MM.YYYY to YYYY-MM-DD
+    const parts = dateString.split('.');
+    if (parts.length === 3) {
+      const [day, month, year] = parts;
+      // Ensure day and month are padded with leading zeros if needed
+      return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+    }
+    
+    // If already in YYYY-MM-DD format or another valid format, return as is
+    return dateString;
+  } catch (error) {
+    console.error('Error formatting date:', dateString, error);
+    // Return a fallback date or null when parsing fails
+    return null;
   }
-  
-  // Parse DD.MM.YYYY to YYYY-MM-DD
-  const parts = dateString.split('.');
-  if (parts.length === 3) {
-    const [day, month, year] = parts;
-    return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
-  }
-  
-  // If already in YYYY-MM-DD format or another valid format, return as is
-  return dateString;
 };
 
 export const importVisitorData = async (file: File): Promise<{ success: boolean; message: string }> => {
@@ -47,16 +54,23 @@ export const importVisitorData = async (file: File): Promise<{ success: boolean;
         try {
           const data = (results.data as VisitorCSVRow[])
             .filter(row => row.date && row.count)
-            .map(row => ({
-              date: formatDate(row.date),
-              visitor_count: parseInt(row.count, 10),
-              day_of_week: row.day_of_week || null,
-              is_weekend: row.is_weekend === '1',
-              is_holiday: row.is_holiday === '1',
-              is_school_break: row.is_school_break === '1',
-              special_event: row.special_event || null,
-              created_at: row.created_at || new Date().toISOString()
-            }));
+            .map(row => {
+              const formattedDate = formatDate(row.date);
+              if (!formattedDate) {
+                throw new Error(`Invalid date format: ${row.date}`);
+              }
+
+              return {
+                date: formattedDate,
+                visitor_count: parseInt(row.count, 10),
+                day_of_week: row.day_of_week || null,
+                is_weekend: row.is_weekend === '1',
+                is_holiday: row.is_holiday === '1',
+                is_school_break: row.is_school_break === '1',
+                special_event: row.special_event || null,
+                created_at: row.created_at || new Date().toISOString()
+              };
+            });
 
           if (data.length === 0) {
             resolve({ 
@@ -66,11 +80,16 @@ export const importVisitorData = async (file: File): Promise<{ success: boolean;
             return;
           }
 
+          console.log('Importing visitor data:', data);
+
           const { error } = await supabase
             .from('visitor_data')
             .insert(data);
 
-          if (error) throw error;
+          if (error) {
+            console.error('Supabase error:', error);
+            throw error;
+          }
 
           resolve({ 
             success: true, 
@@ -103,12 +122,19 @@ export const importWeatherData = async (file: File): Promise<{ success: boolean;
         try {
           const data = (results.data as WeatherCSVRow[])
             .filter(row => row.date && row.temperature && row.condition)
-            .map(row => ({
-              date: formatDate(row.date),
-              temperature: parseFloat(row.temperature),
-              condition: row.condition,
-              created_at: new Date().toISOString()
-            }));
+            .map(row => {
+              const formattedDate = formatDate(row.date);
+              if (!formattedDate) {
+                throw new Error(`Invalid date format: ${row.date}`);
+              }
+
+              return {
+                date: formattedDate,
+                temperature: parseFloat(row.temperature),
+                condition: row.condition,
+                created_at: new Date().toISOString()
+              };
+            });
 
           if (data.length === 0) {
             resolve({ 
@@ -118,11 +144,16 @@ export const importWeatherData = async (file: File): Promise<{ success: boolean;
             return;
           }
 
+          console.log('Importing weather data:', data);
+
           const { error } = await supabase
             .from('weather_data')
             .insert(data);
 
-          if (error) throw error;
+          if (error) {
+            console.error('Supabase error:', error);
+            throw error;
+          }
 
           resolve({ 
             success: true, 
