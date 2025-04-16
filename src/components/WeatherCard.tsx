@@ -12,14 +12,14 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ weather, title = "Aktuelles W
   // Map OpenWeather icon codes to Lucide icons
   const getWeatherIcon = (iconCode: string) => {
     const iconMap: Record<string, React.ReactNode> = {
-      "01d": <Sun className="h-14 w-14 text-warning" />,
-      "01n": <Sun className="h-14 w-14 text-warning" />,
-      "02d": <Cloud className="h-14 w-14 text-water-400" />,
-      "02n": <Cloud className="h-14 w-14 text-water-400" />,
-      "03d": <Cloud className="h-14 w-14 text-water-400" />,
-      "03n": <Cloud className="h-14 w-14 text-water-400" />,
-      "04d": <Cloud className="h-14 w-14 text-water-600" />,
-      "04n": <Cloud className="h-14 w-14 text-water-600" />,
+      "01d": <Sun className="h-16 w-16 text-warning" />,
+      "01n": <Sun className="h-16 w-16 text-warning" />,
+      "02d": <Cloud className="h-16 w-16 text-blue-400" />,
+      "02n": <Cloud className="h-16 w-16 text-blue-400" />,
+      "03d": <Cloud className="h-16 w-16 text-blue-400" />,
+      "03n": <Cloud className="h-16 w-16 text-blue-400" />,
+      "04d": <Cloud className="h-16 w-16 text-blue-600" />,
+      "04n": <Cloud className="h-16 w-16 text-blue-600" />,
       "09d": <CloudDrizzle className="h-14 w-14 text-water-500" />,
       "09n": <CloudDrizzle className="h-14 w-14 text-water-500" />,
       "10d": <CloudRain className="h-14 w-14 text-water-500" />,
@@ -32,40 +32,40 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ weather, title = "Aktuelles W
       "50n": <Wind className="h-14 w-14 text-water-300" />,
     };
 
-    return iconMap[iconCode] || <Cloud className="h-14 w-14 text-water-400" />;
+    return iconMap[iconCode] || <Cloud className="h-16 w-16 text-blue-400" />;
   };
 
   return (
     <Card className="overflow-hidden">
-      <CardHeader className="bg-gradient-to-r from-water-500 to-water-700 text-white">
+      <CardHeader className="bg-blue-500 text-white p-4">
         <CardTitle className="text-lg">{title}</CardTitle>
       </CardHeader>
-      <CardContent className="pt-6">
+      <CardContent className="pt-6 px-6 pb-6">
         <div className="flex flex-col items-center">
           {getWeatherIcon(weather.icon)}
-          <h2 className="mt-2 text-3xl font-bold">{Math.round(weather.temp)}°C</h2>
-          <p className="text-muted-foreground">Gefühlt wie: {Math.round(weather.feels_like)}°C</p>
-          <p className="mt-1 font-medium capitalize">{weather.description}</p>
+          <h2 className="mt-2 text-4xl font-bold">{Math.round(weather.temp)}°C</h2>
+          <p className="text-sm text-gray-600">Gefühlt wie: {Math.round(weather.feels_like)}°C</p>
+          <p className="mt-1 text-sm font-medium capitalize text-gray-700">{weather.description}</p>
         </div>
         
         <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
           <div className="flex flex-col">
-            <span className="text-muted-foreground">Luftfeuchtigkeit</span>
+            <span className="text-gray-500">Luftfeuchtigkeit</span>
             <span className="font-medium">{weather.humidity}%</span>
           </div>
           
           <div className="flex flex-col">
-            <span className="text-muted-foreground">Wind</span>
+            <span className="text-gray-500">Wind</span>
             <span className="font-medium">{weather.wind_speed} km/h</span>
           </div>
           
           <div className="flex flex-col">
-            <span className="text-muted-foreground">Niederschlag</span>
+            <span className="text-gray-500">Niederschlag</span>
             <span className="font-medium">{weather.precipitation} mm</span>
           </div>
           
           <div className="flex flex-col">
-            <span className="text-muted-foreground">Datum</span>
+            <span className="text-gray-500">Datum</span>
             <span className="font-medium">{new Date(weather.date).toLocaleDateString('de-DE')}</span>
           </div>
         </div>
