@@ -1,12 +1,19 @@
 
 import React from 'react';
+import { useQuery } from '@tanstack/react-query';
 import HistoricalComparisonChart from '@/components/HistoricalComparisonChart';
-import { mockYearlyComparison } from '@/lib/mock-data';
+import { fetchYearlyComparisons } from '@/services/visitorService';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { TrendingUp, TrendingDown } from 'lucide-react';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const Comparison: React.FC = () => {
+  const { data: yearlyData, isLoading } = useQuery({
+    queryKey: ['yearlyComparisons'],
+    queryFn: fetchYearlyComparisons
+  });
+  
   // Format number
   const formatNumber = (num: number) => {
     return new Intl.NumberFormat('de-DE').format(num);
@@ -24,12 +31,6 @@ const Comparison: React.FC = () => {
     'July', 'August', 'September', 'October', 'November', 'December'
   ];
   
-  // Get total by year
-  const yearlyTotals = mockYearlyComparison.map(y => ({
-    year: y.year,
-    total: y.total_visitors
-  }));
-  
   // Format German month names
   const germanMonths = [
     'Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 
@@ -41,13 +42,43 @@ const Comparison: React.FC = () => {
     acc[month] = germanMonths[index];
     return acc;
   }, {} as Record<string, string>);
+
+  if (isLoading) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-3xl font-bold mb-8">Jahresvergleich der Besucherzahlen</h1>
+        <div className="mb-8">
+          <Skeleton className="w-full h-[400px]" />
+        </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <Skeleton className="w-full h-[300px]" />
+          <Skeleton className="w-full h-[300px]" />
+        </div>
+      </div>
+    );
+  }
+  
+  if (!yearlyData || yearlyData.length === 0) {
+    return (
+      <div className="container mx-auto px-4 py-8">
+        <h1 className="text-3xl font-bold mb-8">Jahresvergleich der Besucherzahlen</h1>
+        <Card>
+          <CardContent className="py-8">
+            <p className="text-center text-muted-foreground">
+              Keine Daten für den Vergleich verfügbar.
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
   
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-8">Jahresvergleich der Besucherzahlen</h1>
       
       <div className="mb-8">
-        <HistoricalComparisonChart data={mockYearlyComparison} />
+        <HistoricalComparisonChart data={yearlyData} />
       </div>
       
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
@@ -66,8 +97,8 @@ const Comparison: React.FC = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {mockYearlyComparison.map((yearData, index) => {
-                  const prevYear = index > 0 ? mockYearlyComparison[index - 1] : null;
+                {yearlyData.map((yearData, index) => {
+                  const prevYear = index > 0 ? yearlyData[index - 1] : null;
                   const growth = prevYear 
                     ? calculateGrowth(yearData.total_visitors, prevYear.total_visitors) 
                     : 0;
@@ -118,7 +149,7 @@ const Comparison: React.FC = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {mockYearlyComparison.map((yearData) => (
+                {yearlyData.map((yearData) => (
                   <TableRow key={yearData.year}>
                     <TableCell className="font-medium">{yearData.year}</TableCell>
                     <TableCell>
@@ -145,7 +176,7 @@ const Comparison: React.FC = () => {
               <TableHeader>
                 <TableRow>
                   <TableHead>Monat</TableHead>
-                  {mockYearlyComparison.map(year => (
+                  {yearlyData.map(year => (
                     <TableHead key={year.year}>{year.year}</TableHead>
                   ))}
                 </TableRow>
@@ -154,7 +185,7 @@ const Comparison: React.FC = () => {
                 {months.map(month => (
                   <TableRow key={month}>
                     <TableCell className="font-medium">{monthNameMap[month]}</TableCell>
-                    {mockYearlyComparison.map(year => (
+                    {yearlyData.map(year => (
                       <TableCell key={`${year.year}-${month}`}>
                         {formatNumber(year.months[month])}
                       </TableCell>
