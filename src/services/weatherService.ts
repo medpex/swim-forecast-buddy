@@ -1,3 +1,4 @@
+import { getSettings } from './settingsService';
 
 interface OpenWeatherResponse {
   main: {
@@ -26,8 +27,7 @@ const BASE_URL = "https://api.openweathermap.org/data/2.5";
 const DEFAULT_CITY = "Berlin,DE";
 
 // Verbesserte Funktion, um die Standortabfrage zu erstellen
-export const getLocationQuery = () => {
-  const postalCode = localStorage.getItem('poolPostalCode');
+export const getLocationQuery = (postalCode: string | undefined) => {
   return postalCode 
     ? `zip=${postalCode},DE` 
     : `q=${DEFAULT_CITY}`;
@@ -57,15 +57,19 @@ const handleApiResponse = async (response: Response) => {
 const cache: Record<string, { data: any, timestamp: number }> = {};
 const CACHE_DURATION = 10 * 60 * 1000; // 10 Minuten in Millisekunden
 
-export const fetchCurrentWeather = async (apiKey: string) => {
+export const fetchCurrentWeather = async () => {
   try {
-    // Prüfen, ob der API-Schlüssel leer ist
-    if (!apiKey || apiKey.trim() === '') {
+    const settings = await getSettings();
+    
+    if (!settings?.openweather_api_key) {
       throw new Error('Kein API-Schlüssel vorhanden. Bitte tragen Sie einen OpenWeather API-Schlüssel in den Einstellungen ein.');
     }
     
-    const locationQuery = getLocationQuery();
-    const cacheKey = `current_${locationQuery}_${apiKey}`;
+    const locationQuery = settings.postal_code 
+      ? `zip=${settings.postal_code},DE` 
+      : `q=${DEFAULT_CITY}`;
+    
+    const cacheKey = `current_${locationQuery}_${settings.openweather_api_key}`;
     
     // Überprüfen, ob ein gültiger Cache-Eintrag existiert
     const now = Date.now();
@@ -77,7 +81,7 @@ export const fetchCurrentWeather = async (apiKey: string) => {
     console.log(`Rufe OpenWeather API auf: ${BASE_URL}/weather?${locationQuery}`);
     
     const response = await fetch(
-      `${BASE_URL}/weather?${locationQuery}&units=metric&appid=${apiKey}`
+      `${BASE_URL}/weather?${locationQuery}&units=metric&appid=${settings.openweather_api_key}`
     );
     
     const data: OpenWeatherResponse = await handleApiResponse(response);
@@ -106,15 +110,19 @@ export const fetchCurrentWeather = async (apiKey: string) => {
   }
 };
 
-export const fetchWeatherForecast = async (apiKey: string) => {
+export const fetchWeatherForecast = async () => {
   try {
-    // Prüfen, ob der API-Schlüssel leer ist
-    if (!apiKey || apiKey.trim() === '') {
+    const settings = await getSettings();
+    
+    if (!settings?.openweather_api_key) {
       throw new Error('Kein API-Schlüssel vorhanden. Bitte tragen Sie einen OpenWeather API-Schlüssel in den Einstellungen ein.');
     }
     
-    const locationQuery = getLocationQuery();
-    const cacheKey = `forecast_${locationQuery}_${apiKey}`;
+    const locationQuery = settings.postal_code 
+      ? `zip=${settings.postal_code},DE` 
+      : `q=${DEFAULT_CITY}`;
+    
+    const cacheKey = `forecast_${locationQuery}_${settings.openweather_api_key}`;
     
     // Überprüfen, ob ein gültiger Cache-Eintrag existiert
     const now = Date.now();
@@ -126,7 +134,7 @@ export const fetchWeatherForecast = async (apiKey: string) => {
     console.log(`Rufe OpenWeather API auf: ${BASE_URL}/forecast?${locationQuery}`);
     
     const response = await fetch(
-      `${BASE_URL}/forecast?${locationQuery}&units=metric&appid=${apiKey}`
+      `${BASE_URL}/forecast?${locationQuery}&units=metric&appid=${settings.openweather_api_key}`
     );
 
     const data: ForecastResponse = await handleApiResponse(response);

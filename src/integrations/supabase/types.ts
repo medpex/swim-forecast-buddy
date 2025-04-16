@@ -9,7 +9,143 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      forecast: {
+        Row: {
+          confidence_lower: number | null
+          confidence_upper: number | null
+          created_at: string | null
+          date: string
+          id: string
+          predicted_visitors: number
+          weather_id: string | null
+        }
+        Insert: {
+          confidence_lower?: number | null
+          confidence_upper?: number | null
+          created_at?: string | null
+          date: string
+          id?: string
+          predicted_visitors: number
+          weather_id?: string | null
+        }
+        Update: {
+          confidence_lower?: number | null
+          confidence_upper?: number | null
+          created_at?: string | null
+          date?: string
+          id?: string
+          predicted_visitors?: number
+          weather_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "forecast_weather_id_fkey"
+            columns: ["weather_id"]
+            isOneToOne: false
+            referencedRelation: "weather_data"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      settings: {
+        Row: {
+          id: number
+          last_updated: string | null
+          openweather_api_key: string | null
+          postal_code: string | null
+        }
+        Insert: {
+          id: number
+          last_updated?: string | null
+          openweather_api_key?: string | null
+          postal_code?: string | null
+        }
+        Update: {
+          id?: number
+          last_updated?: string | null
+          openweather_api_key?: string | null
+          postal_code?: string | null
+        }
+        Relationships: []
+      }
+      visitor_data: {
+        Row: {
+          created_at: string | null
+          date: string
+          day_of_week: string | null
+          id: string
+          is_holiday: boolean | null
+          is_school_break: boolean | null
+          is_weekend: boolean | null
+          special_event: string | null
+          visitor_count: number
+        }
+        Insert: {
+          created_at?: string | null
+          date: string
+          day_of_week?: string | null
+          id?: string
+          is_holiday?: boolean | null
+          is_school_break?: boolean | null
+          is_weekend?: boolean | null
+          special_event?: string | null
+          visitor_count: number
+        }
+        Update: {
+          created_at?: string | null
+          date?: string
+          day_of_week?: string | null
+          id?: string
+          is_holiday?: boolean | null
+          is_school_break?: boolean | null
+          is_weekend?: boolean | null
+          special_event?: string | null
+          visitor_count?: number
+        }
+        Relationships: []
+      }
+      weather_data: {
+        Row: {
+          condition: string | null
+          created_at: string | null
+          date: string
+          description: string | null
+          feels_like: number | null
+          humidity: number | null
+          icon: string | null
+          id: string
+          precipitation: number | null
+          temperature: number | null
+          wind_speed: number | null
+        }
+        Insert: {
+          condition?: string | null
+          created_at?: string | null
+          date: string
+          description?: string | null
+          feels_like?: number | null
+          humidity?: number | null
+          icon?: string | null
+          id?: string
+          precipitation?: number | null
+          temperature?: number | null
+          wind_speed?: number | null
+        }
+        Update: {
+          condition?: string | null
+          created_at?: string | null
+          date?: string
+          description?: string | null
+          feels_like?: number | null
+          humidity?: number | null
+          icon?: string | null
+          id?: string
+          precipitation?: number | null
+          temperature?: number | null
+          wind_speed?: number | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
