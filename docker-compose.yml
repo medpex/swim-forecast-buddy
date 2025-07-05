@@ -1,11 +1,13 @@
+version: '3.8'
+
 services:
   db:
     image: postgres:15-alpine
     container_name: swim_forecast_db
     ports:
-      - "5432:5432" # Optional: Expose port to host for direct DB access if needed
+      - "5432:5432"
     env_file:
-      - .env # For POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB
+      - .env
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
@@ -24,15 +26,15 @@ services:
     ports:
       - "8000:8000"
     env_file:
-      - .env # For DATABASE_URL, OPENWEATHER_API_KEY etc.
+      - .env
     volumes:
       - ./backend:/app/backend
-    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    command: python -m uvicorn backend.main:app --host 0.0.0.0 --port 8000 --reload --reload-dir /app/backend
     networks:
       - app-network
     depends_on:
-      db: # Backend depends on the database service
-        condition: service_healthy # Wait for DB to be healthy
+      db:
+        condition: service_healthy
     restart: unless-stopped
 
   frontend:
@@ -44,7 +46,7 @@ services:
     ports:
       - "8080:80"
     depends_on:
-      - backend # Frontend depends on the backend service
+      - backend
     networks:
       - app-network
     restart: unless-stopped
@@ -54,5 +56,5 @@ networks:
     driver: bridge
 
 volumes:
-  postgres_data: # Define the named volume for PostgreSQL data persistence
+  postgres_data:
     driver: local
