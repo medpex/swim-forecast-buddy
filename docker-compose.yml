@@ -5,9 +5,9 @@ services:
     image: postgres:15-alpine
     container_name: swim_forecast_db
     ports:
-      - "5432:5432" # Optional: Expose port to host for direct DB access if needed
+      - "5432:5432"
     env_file:
-      - .env # For POSTGRES_USER, POSTGRES_PASSWORD, POSTGRES_DB
+      - .env
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
@@ -26,19 +26,15 @@ services:
     ports:
       - "8000:8000"
     env_file:
-      - .env # For DATABASE_URL, OPENWEATHER_API_KEY etc.
+      - .env
     volumes:
-      # The source ./backend (relative to docker-compose.yml) is mounted into /app/backend in the container.
-      # This aligns with where the Dockerfile now copies the code.
       - ./backend:/app/backend
-    # The command needs to specify the module path backend.main and watch the correct directory for reloads.
-    # Using python -m uvicorn for consistency and potentially better path handling.
     command: python -m uvicorn backend.main:app --host 0.0.0.0 --port 8000 --reload --reload-dir /app/backend
     networks:
       - app-network
     depends_on:
-      db: # Backend depends on the database service
-        condition: service_healthy # Wait for DB to be healthy
+      db:
+        condition: service_healthy
     restart: unless-stopped
 
   frontend:
@@ -50,7 +46,7 @@ services:
     ports:
       - "8080:80"
     depends_on:
-      - backend # Frontend depends on the backend service
+      - backend
     networks:
       - app-network
     restart: unless-stopped
@@ -60,5 +56,5 @@ networks:
     driver: bridge
 
 volumes:
-  postgres_data: # Define the named volume for PostgreSQL data persistence
+  postgres_data:
     driver: local

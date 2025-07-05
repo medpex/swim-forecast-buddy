@@ -4,23 +4,19 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_absolute_error, r2_score
 import joblib
 import os
-import sys # For path adjustments in __main__
+import sys
 
-# Standardized absolute imports
-from backend import services
-from backend import features # This imports the module
-# from backend.features import prepare_features_for_model, MODEL_FEATURES # Alternative: direct import of items
-from backend.database import SessionLocal # For creating a local DB session
+from backend import services, features
+from backend.database import SessionLocal
 
 TARGET_COLUMN = 'visitor_count'
-MODEL_DIR = os.path.join(os.path.dirname(__file__), "models") # Use __file__ for robust path
+MODEL_DIR = os.path.join(os.path.dirname(__file__), "models")
 MODEL_FILENAME = "visitor_forecast_model.joblib"
 MODEL_PATH = os.path.join(MODEL_DIR, MODEL_FILENAME)
 
 def train_model():
     print("Starting model training process...")
 
-    # Create a new database session for this training operation
     db = SessionLocal()
     print("Database session created for training.")
 
@@ -33,11 +29,11 @@ def train_model():
             print("No historical data loaded. Aborting training.")
             return
 
-        print(f"Loaded {len(historical_data_df)} historical records.")
-        print("Sample of loaded data:\n", historical_data_df.head())
+        print(f"Loaded {len(historical_data_df)} records.")
+        print(historical_data_df.head())
 
-        # 2. Prepare features for the model
-        print("Preparing features for the model...")
+        # 2. Prepare features
+        print("Preparing features for model training...")
         prepared_df = features.prepare_features_for_model(
             historical_data_df,
             target_column=TARGET_COLUMN,
@@ -45,90 +41,81 @@ def train_model():
         )
 
         if prepared_df.empty or TARGET_COLUMN not in prepared_df.columns:
-            print("Feature preparation resulted in empty data or missing target column. Aborting training.")
+            print("Invalid or empty feature set. Aborting.")
             return
 
         prepared_df.dropna(subset=[TARGET_COLUMN], inplace=True)
 
-        for col in features.MODEL_FEATURES: # Use features.MODEL_FEATURES
+        # Ensure all model features exist and are numeric
+        for col in features.MODEL_FEATURES:
             if col not in prepared_df.columns:
-                print(f"Warning: Feature column '{col}' defined in MODEL_FEATURES is missing from prepared_df. It will be treated as all zeros.")
+                print(f"Warning: Missing feature '{col}'. Filling with zeros.")
                 prepared_df[col] = 0
             elif not pd.api.types.is_numeric_dtype(prepared_df[col]):
-                print(f"Warning: Feature column '{col}' is not numeric. Attempting to convert or fill with 0.")
+                print(f"Warning: Non-numeric feature '{col}'. Attempting conversion.")
                 prepared_df[col] = pd.to_numeric(prepared_df[col], errors='coerce').fillna(0)
 
-        X = prepared_df[features.MODEL_FEATURES] # Use features.MODEL_FEATURES
+        X = prepared_df[features.MODEL_FEATURES]
         y = prepared_df[TARGET_COLUMN]
 
-        if X.empty or len(X) < 10:
-            print("Not enough data points after feature preparation. Aborting training.")
+        if len(X) < 10:
+            print("Insufficient training data. Aborting.")
             return
 
-        print(f"Features for training (X head):\n{X.head()}")
-        print(f"Target for training (y head):\n{y.head()}")
-        print(f"Shape of X: {X.shape}, Shape of y: {y.shape}")
-
-        # 3. Split data
-        print("Splitting data into training and testing sets...")
+        # 3. Split
+        print("Splitting data...")
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
         if X_train.empty or X_test.empty:
-            print("Not enough data after splitting for training and testing. Aborting.")
+            print("Training/testing split failed. Aborting.")
             return
 
         # 4. Train model
-        print("Training RandomForestRegressor model...")
-        model = RandomForestRegressor(n_estimators=100, random_state=42, n_jobs=-1, max_depth=10, min_samples_split=5, min_samples_leaf=3)
+        print("Training RandomForestRegressor...")
+        model = RandomForestRegressor(
+            n_estimators=100,
+            random_state=42,
+            n_jobs=-1,
+            max_depth=10,
+            min_samples_split=5,
+            min_samples_leaf=3
+        )
         model.fit(X_train, y_train)
-        print("Model training complete.")
+        print("Training complete.")
 
-        # 5. Evaluate model
-        print("Evaluating model performance...")
+        # 5. Evaluate
+        print("Evaluating model...")
         predictions = model.predict(X_test)
         mae = mean_absolute_error(y_test, predictions)
         r2 = r2_score(y_test, predictions)
-        print(f"Model Evaluation on Test Set:")
-        print(f"  Mean Absolute Error (MAE): {mae:.2f}")
-        print(f"  R-squared (R2): {r2:.2f}")
+
+        print(f"Evaluation Results:\n  MAE: {mae:.2f}\n  R²: {r2:.2f}")
 
         try:
             importances = model.feature_importances_
-            feature_importance_df = pd.DataFrame({'feature': features.MODEL_FEATURES, 'importance': importances})
-            feature_importance_df = feature_importance_df.sort_values('importance', ascending=False)
-            print("\nTop 10 Feature Importances:")
-            print(feature_importance_df.head(10))
+            fi_df = pd.DataFrame({'feature': features.MODEL_FEATURES, 'importance': importances})
+            fi_df = fi_df.sort_values('importance', ascending=False)
+            print("\nTop Feature Importances:")
+            print(fi_df.head(10))
         except Exception as e:
-            print(f"Could not calculate feature importances: {e}")
+            print(f"Feature importance extraction failed: {e}")
 
         # 6. Save model
-        print(f"Saving trained model to {MODEL_PATH}...")
-        if not os.path.exists(MODEL_DIR):
-            os.makedirs(MODEL_DIR)
+        print(f"Saving model to: {MODEL_PATH}")
+        os.makedirs(MODEL_DIR, exist_ok=True)
         joblib.dump(model, MODEL_PATH)
-        print(f"Model successfully saved to {MODEL_PATH}")
+        print("Model saved successfully.")
 
     except Exception as e:
-        print(f"An error occurred during the training process: {e}")
-        # Optionally re-raise the exception if needed by the caller
-        # raise
+        print(f"Exception during training: {e}")
     finally:
-        print("Closing database session for training.")
         db.close()
-
+        print("Database session closed.")
 
 if __name__ == "__main__":
-    # Adjust sys.path for direct execution to find the 'backend' package
-    # This assumes ml_trainer.py is in backend/ and the project root is one level up.
-    current_script_path = os.path.abspath(__file__)
-    backend_dir = os.path.dirname(current_script_path) # Should be /app/backend or similar
-    project_root = os.path.dirname(backend_dir) # Should be /app
-
-    if project_root not in sys.path:
-        sys.path.insert(0, project_root)
-
-    # Re-import with adjusted path if necessary, though top-level should work now
-    from backend import services, features, database
-    from backend.database import SessionLocal
+    # Adjust sys.path if run directly
+    backend_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    if backend_root not in sys.path:
+        sys.path.insert(0, backend_root)
 
     train_model()

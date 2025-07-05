@@ -1,0 +1,1282 @@
+date,temperature,condition
+2022-01-01,11.6,Drizzle
+2022-01-02,12.3,Drizzle
+2022-01-03,8.5,Drizzle
+2022-01-04,7.1,Drizzle
+2022-01-05,3.8,Unknown
+2022-01-06,3.0,Unknown
+2022-01-07,3.0,Unknown
+2022-01-08,2.8,Unknown
+2022-01-09,4.0,Unknown
+2022-01-10,3.6,Drizzle
+2022-01-11,3.9,Partly Cloudy
+2022-01-12,4.6,Partly Cloudy
+2022-01-13,6.2,Partly Cloudy
+2022-01-14,7.4,Partly Cloudy
+2022-01-15,5.1,Partly Cloudy
+2022-01-16,6.0,Drizzle
+2022-01-17,7.0,Drizzle
+2022-01-18,6.9,Partly Cloudy
+2022-01-19,5.7,Drizzle
+2022-01-20,3.7,Unknown
+2022-01-21,5.6,Partly Cloudy
+2022-01-22,6.0,Drizzle
+2022-01-23,7.4,Partly Cloudy
+2022-01-24,5.9,Partly Cloudy
+2022-01-25,5.0,Partly Cloudy
+2022-01-26,4.2,Partly Cloudy
+2022-01-27,7.5,Drizzle
+2022-01-28,6.1,Partly Cloudy
+2022-01-29,9.5,Drizzle
+2022-01-30,6.6,Partly Cloudy
+2022-01-31,3.4,Unknown
+2022-02-01,6.4,Unknown
+2022-02-02,6.4,Drizzle
+2022-02-03,7.7,Drizzle
+2022-02-04,8.7,Drizzle
+2022-02-05,5.3,Unknown
+2022-02-06,7.4,Unknown
+2022-02-07,5.8,Unknown
+2022-02-08,8.6,Drizzle
+2022-02-09,9.8,Drizzle
+2022-02-10,6.9,Drizzle
+2022-02-11,6.0,Unknown
+2022-02-12,4.6,Partly Cloudy
+2022-02-13,6.9,Partly Cloudy
+2022-02-14,11.9,Drizzle
+2022-02-15,7.8,Drizzle
+2022-02-16,11.3,Drizzle
+2022-02-17,11.2,Unknown
+2022-02-18,10.0,Drizzle
+2022-02-19,5.4,Unknown
+2022-02-20,8.6,Unknown
+2022-02-21,9.2,Unknown
+2022-02-22,7.3,Drizzle
+2022-02-23,9.0,Partly Cloudy
+2022-02-24,9.3,Drizzle
+2022-02-25,6.2,Unknown
+2022-02-26,8.6,Clear
+2022-02-27,7.2,Partly Cloudy
+2022-02-28,5.7,Clear
+2022-03-01,6.4,Partly Cloudy
+2022-03-02,7.8,Partly Cloudy
+2022-03-03,4.6,Partly Cloudy
+2022-03-04,5.7,Drizzle
+2022-03-05,4.8,Partly Cloudy
+2022-03-06,4.2,Partly Cloudy
+2022-03-07,7.5,Partly Cloudy
+2022-03-08,9.0,Clear
+2022-03-09,10.5,Clear
+2022-03-10,10.5,Partly Cloudy
+2022-03-11,7.8,Clear
+2022-03-12,10.5,Partly Cloudy
+2022-03-13,10.9,Partly Cloudy
+2022-03-14,9.7,Drizzle
+2022-03-15,10.9,Drizzle
+2022-03-16,10.4,Partly Cloudy
+2022-03-17,10.4,Drizzle
+2022-03-18,12.6,Partly Cloudy
+2022-03-19,9.8,Partly Cloudy
+2022-03-20,11.3,Partly Cloudy
+2022-03-21,12.6,Clear
+2022-03-22,15.6,Partly Cloudy
+2022-03-23,15.9,Clear
+2022-03-24,14.9,Partly Cloudy
+2022-03-25,16.0,Partly Cloudy
+2022-03-26,14.2,Partly Cloudy
+2022-03-27,14.0,Partly Cloudy
+2022-03-28,11.7,Partly Cloudy
+2022-03-29,9.6,Partly Cloudy
+2022-03-30,6.0,Drizzle
+2022-03-31,5.7,Unknown
+2022-04-01,4.6,Unknown
+2022-04-02,4.9,Partly Cloudy
+2022-04-03,7.2,Drizzle
+2022-04-04,6.8,Unknown
+2022-04-05,7.8,Drizzle
+2022-04-06,10.0,Drizzle
+2022-04-07,9.4,Drizzle
+2022-04-08,9.0,Unknown
+2022-04-09,6.9,Unknown
+2022-04-10,7.5,Unknown
+2022-04-11,11.2,Partly Cloudy
+2022-04-12,15.1,Partly Cloudy
+2022-04-13,20.5,Drizzle
+2022-04-14,15.9,Drizzle
+2022-04-15,10.0,Drizzle
+2022-04-16,11.4,Partly Cloudy
+2022-04-17,13.8,Partly Cloudy
+2022-04-18,14.7,Partly Cloudy
+2022-04-19,13.3,Partly Cloudy
+2022-04-20,14.0,Partly Cloudy
+2022-04-21,13.0,Drizzle
+2022-04-22,14.6,Partly Cloudy
+2022-04-23,15.3,Partly Cloudy
+2022-04-24,13.2,Drizzle
+2022-04-25,13.2,Partly Cloudy
+2022-04-26,15.1,Partly Cloudy
+2022-04-27,14.1,Partly Cloudy
+2022-04-28,15.5,Partly Cloudy
+2022-04-29,14.5,Partly Cloudy
+2022-04-30,14.0,Partly Cloudy
+2022-05-01,13.7,Partly Cloudy
+2022-05-02,15.4,Partly Cloudy
+2022-05-03,14.0,Drizzle
+2022-05-04,14.8,Partly Cloudy
+2022-05-05,15.9,Partly Cloudy
+2022-05-06,18.9,Drizzle
+2022-05-07,19.1,Drizzle
+2022-05-08,16.6,Clear
+2022-05-09,20.2,Partly Cloudy
+2022-05-10,23.6,Drizzle
+2022-05-11,22.5,Drizzle
+2022-05-12,17.8,Drizzle
+2022-05-13,15.9,Drizzle
+2022-05-14,17.4,Drizzle
+2022-05-15,19.8,Partly Cloudy
+2022-05-16,23.6,Partly Cloudy
+2022-05-17,18.7,Drizzle
+2022-05-18,24.0,Drizzle
+2022-05-19,27.6,Drizzle
+2022-05-20,19.6,Drizzle
+2022-05-21,17.1,Drizzle
+2022-05-22,17.2,Drizzle
+2022-05-23,21.4,Drizzle
+2022-05-24,17.7,Drizzle
+2022-05-25,18.3,Drizzle
+2022-05-26,17.4,Drizzle
+2022-05-27,15.1,Drizzle
+2022-05-28,14.2,Drizzle
+2022-05-29,13.7,Drizzle
+2022-05-30,12.2,Drizzle
+2022-05-31,15.7,Drizzle
+2022-06-01,14.9,Drizzle
+2022-06-02,16.9,Drizzle
+2022-06-03,20.1,Partly Cloudy
+2022-06-04,19.7,Partly Cloudy
+2022-06-05,23.1,Drizzle
+2022-06-06,21.1,Drizzle
+2022-06-07,17.7,Drizzle
+2022-06-08,20.7,Drizzle
+2022-06-09,20.1,Drizzle
+2022-06-10,21.5,Drizzle
+2022-06-11,22.6,Drizzle
+2022-06-12,22.2,Partly Cloudy
+2022-06-13,17.4,Drizzle
+2022-06-14,17.6,Drizzle
+2022-06-15,21.8,Partly Cloudy
+2022-06-16,20.7,Partly Cloudy
+2022-06-17,23.2,Partly Cloudy
+2022-06-18,26.3,Drizzle
+2022-06-19,20.7,Drizzle
+2022-06-20,17.6,Drizzle
+2022-06-21,22.0,Partly Cloudy
+2022-06-22,25.1,Partly Cloudy
+2022-06-23,27.8,Clear
+2022-06-24,31.4,Drizzle
+2022-06-25,27.9,Drizzle
+2022-06-26,28.2,Drizzle
+2022-06-27,24.7,Drizzle
+2022-06-28,22.1,Partly Cloudy
+2022-06-29,25.6,Drizzle
+2022-06-30,26.5,Partly Cloudy
+2022-07-01,20.7,Drizzle
+2022-07-02,23.7,Partly Cloudy
+2022-07-03,25.7,Drizzle
+2022-07-04,22.2,Partly Cloudy
+2022-07-05,20.5,Drizzle
+2022-07-06,18.7,Drizzle
+2022-07-07,19.4,Drizzle
+2022-07-08,20.8,Drizzle
+2022-07-09,20.2,Drizzle
+2022-07-10,18.9,Drizzle
+2022-07-11,22.4,Partly Cloudy
+2022-07-12,24.5,Partly Cloudy
+2022-07-13,26.5,Drizzle
+2022-07-14,19.7,Partly Cloudy
+2022-07-15,19.5,Drizzle
+2022-07-16,18.8,Drizzle
+2022-07-17,21.7,Partly Cloudy
+2022-07-18,27.6,Partly Cloudy
+2022-07-19,33.3,Partly Cloudy
+2022-07-20,38.0,Partly Cloudy
+2022-07-21,24.9,Drizzle
+2022-07-22,20.1,Drizzle
+2022-07-23,19.2,Drizzle
+2022-07-24,27.8,Partly Cloudy
+2022-07-25,31.5,Drizzle
+2022-07-26,20.8,Drizzle
+2022-07-27,18.9,Drizzle
+2022-07-28,19.8,Partly Cloudy
+2022-07-29,25.6,Partly Cloudy
+2022-07-30,25.9,Drizzle
+2022-07-31,25.7,Drizzle
+2022-08-01,21.0,Drizzle
+2022-08-02,25.7,Partly Cloudy
+2022-08-03,30.4,Partly Cloudy
+2022-08-04,34.4,Partly Cloudy
+2022-08-05,20.5,Drizzle
+2022-08-06,20.8,Partly Cloudy
+2022-08-07,21.5,Partly Cloudy
+2022-08-08,21.8,Partly Cloudy
+2022-08-09,24.3,Partly Cloudy
+2022-08-10,26.3,Partly Cloudy
+2022-08-11,27.9,Clear
+2022-08-12,29.6,Partly Cloudy
+2022-08-13,29.1,Drizzle
+2022-08-14,31.1,Partly Cloudy
+2022-08-15,30.2,Drizzle
+2022-08-16,27.9,Drizzle
+2022-08-17,29.3,Drizzle
+2022-08-18,26.9,Drizzle
+2022-08-19,23.5,Drizzle
+2022-08-20,24.1,Drizzle
+2022-08-21,24.3,Partly Cloudy
+2022-08-22,24.3,Drizzle
+2022-08-23,26.3,Partly Cloudy
+2022-08-24,26.8,Partly Cloudy
+2022-08-25,27.0,Drizzle
+2022-08-26,28.2,Drizzle
+2022-08-27,22.4,Drizzle
+2022-08-28,21.8,Partly Cloudy
+2022-08-29,21.1,Drizzle
+2022-08-30,20.4,Drizzle
+2022-08-31,21.8,Partly Cloudy
+2022-09-01,20.5,Drizzle
+2022-09-02,21.7,Partly Cloudy
+2022-09-03,21.7,Partly Cloudy
+2022-09-04,23.9,Partly Cloudy
+2022-09-05,23.3,Drizzle
+2022-09-06,20.7,Partly Cloudy
+2022-09-07,22.0,Drizzle
+2022-09-08,16.6,Drizzle
+2022-09-09,20.1,Drizzle
+2022-09-10,19.4,Drizzle
+2022-09-11,18.7,Drizzle
+2022-09-12,20.7,Drizzle
+2022-09-13,20.3,Drizzle
+2022-09-14,17.7,Drizzle
+2022-09-15,16.3,Drizzle
+2022-09-16,14.9,Drizzle
+2022-09-17,14.6,Drizzle
+2022-09-18,12.4,Drizzle
+2022-09-19,16.2,Drizzle
+2022-09-20,15.8,Drizzle
+2022-09-21,16.9,Partly Cloudy
+2022-09-22,16.5,Partly Cloudy
+2022-09-23,17.0,Partly Cloudy
+2022-09-24,13.1,Drizzle
+2022-09-25,14.4,Drizzle
+2022-09-26,12.7,Drizzle
+2022-09-27,11.5,Drizzle
+2022-09-28,12.1,Drizzle
+2022-09-29,12.5,Drizzle
+2022-09-30,15.1,Drizzle
+2022-10-01,14.5,Drizzle
+2022-10-02,15.2,Drizzle
+2022-10-03,16.6,Drizzle
+2022-10-04,17.1,Partly Cloudy
+2022-10-05,17.7,Partly Cloudy
+2022-10-06,17.1,Partly Cloudy
+2022-10-07,16.3,Partly Cloudy
+2022-10-08,14.0,Drizzle
+2022-10-09,14.7,Partly Cloudy
+2022-10-10,16.8,Drizzle
+2022-10-11,14.4,Drizzle
+2022-10-12,14.8,Partly Cloudy
+2022-10-13,15.3,Partly Cloudy
+2022-10-14,15.4,Drizzle
+2022-10-15,16.6,Drizzle
+2022-10-16,17.7,Drizzle
+2022-10-17,20.7,Drizzle
+2022-10-18,15.9,Partly Cloudy
+2022-10-19,13.5,Partly Cloudy
+2022-10-20,12.6,Drizzle
+2022-10-21,16.6,Drizzle
+2022-10-22,18.4,Drizzle
+2022-10-23,16.6,Partly Cloudy
+2022-10-24,18.4,Drizzle
+2022-10-25,15.2,Drizzle
+2022-10-26,16.6,Partly Cloudy
+2022-10-27,18.8,Partly Cloudy
+2022-10-28,20.8,Partly Cloudy
+2022-10-29,17.4,Drizzle
+2022-10-30,19.3,Partly Cloudy
+2022-10-31,15.9,Drizzle
+2022-11-01,17.3,Partly Cloudy
+2022-11-02,12.8,Drizzle
+2022-11-03,13.2,Partly Cloudy
+2022-11-04,12.0,Drizzle
+2022-11-05,11.2,Partly Cloudy
+2022-11-06,12.3,Partly Cloudy
+2022-11-07,12.6,Drizzle
+2022-11-08,15.0,Drizzle
+2022-11-09,14.8,Drizzle
+2022-11-10,13.0,Partly Cloudy
+2022-11-11,12.5,Partly Cloudy
+2022-11-12,11.7,Partly Cloudy
+2022-11-13,9.1,Partly Cloudy
+2022-11-14,8.9,Partly Cloudy
+2022-11-15,11.7,Partly Cloudy
+2022-11-16,8.8,Drizzle
+2022-11-17,5.0,Drizzle
+2022-11-18,2.5,Unknown
+2022-11-19,3.4,Partly Cloudy
+2022-11-20,2.1,Unknown
+2022-11-21,1.5,Partly Cloudy
+2022-11-22,2.0,Unknown
+2022-11-23,7.0,Drizzle
+2022-11-24,8.7,Drizzle
+2022-11-25,7.1,Drizzle
+2022-11-26,7.6,Drizzle
+2022-11-27,6.6,Partly Cloudy
+2022-11-28,5.1,Drizzle
+2022-11-29,4.6,Drizzle
+2022-11-30,4.4,Drizzle
+2022-12-01,3.3,Drizzle
+2022-12-02,2.7,Unknown
+2022-12-03,1.5,Partly Cloudy
+2022-12-04,2.9,Partly Cloudy
+2022-12-05,3.2,Unknown
+2022-12-06,3.5,Unknown
+2022-12-07,3.4,Drizzle
+2022-12-08,1.8,Unknown
+2022-12-09,0.8,Partly Cloudy
+2022-12-10,-0.8,Partly Cloudy
+2022-12-11,-0.8,Unknown
+2022-12-12,-1.3,Partly Cloudy
+2022-12-13,-1.7,Unknown
+2022-12-14,-2.4,Partly Cloudy
+2022-12-15,0.1,Unknown
+2022-12-16,-1.2,Unknown
+2022-12-17,-1.8,Unknown
+2022-12-18,-2.3,Partly Cloudy
+2022-12-19,5.0,Drizzle
+2022-12-20,8.7,Drizzle
+2022-12-21,7.8,Drizzle
+2022-12-22,7.4,Drizzle
+2022-12-23,6.6,Drizzle
+2022-12-24,6.9,Drizzle
+2022-12-25,7.3,Drizzle
+2022-12-26,9.3,Drizzle
+2022-12-27,5.1,Unknown
+2022-12-28,8.5,Drizzle
+2022-12-29,10.3,Drizzle
+2022-12-30,8.9,Drizzle
+2022-12-31,14.2,Drizzle
+2023-01-01,15.6,Drizzle
+2023-01-02,12.4,Drizzle
+2023-01-03,6.1,Partly Cloudy
+2023-01-04,11.0,Drizzle
+2023-01-05,8.7,Drizzle
+2023-01-06,9.5,Drizzle
+2023-01-07,10.2,Drizzle
+2023-01-08,9.1,Drizzle
+2023-01-09,7.1,Drizzle
+2023-01-10,6.7,Drizzle
+2023-01-11,9.7,Drizzle
+2023-01-12,10.0,Drizzle
+2023-01-13,9.8,Drizzle
+2023-01-14,9.6,Drizzle
+2023-01-15,10.0,Drizzle
+2023-01-16,5.4,Partly Cloudy
+2023-01-17,4.7,Unknown
+2023-01-18,1.5,Partly Cloudy
+2023-01-19,3.1,Partly Cloudy
+2023-01-20,1.3,Unknown
+2023-01-21,3.5,Partly Cloudy
+2023-01-22,3.5,Partly Cloudy
+2023-01-23,3.3,Partly Cloudy
+2023-01-24,2.0,Partly Cloudy
+2023-01-25,0.2,Partly Cloudy
+2023-01-26,2.0,Unknown
+2023-01-27,3.6,Partly Cloudy
+2023-01-28,2.1,Partly Cloudy
+2023-01-29,3.3,Drizzle
+2023-01-30,5.6,Drizzle
+2023-01-31,6.3,Unknown
+2023-02-01,5.3,Unknown
+2023-02-02,6.6,Unknown
+2023-02-03,7.9,Drizzle
+2023-02-04,4.4,Partly Cloudy
+2023-02-05,1.4,Partly Cloudy
+2023-02-06,4.2,Partly Cloudy
+2023-02-07,2.4,Partly Cloudy
+2023-02-08,3.9,Partly Cloudy
+2023-02-09,3.7,Partly Cloudy
+2023-02-10,6.6,Partly Cloudy
+2023-02-11,8.4,Partly Cloudy
+2023-02-12,8.0,Drizzle
+2023-02-13,7.8,Partly Cloudy
+2023-02-14,9.2,Partly Cloudy
+2023-02-15,8.2,Partly Cloudy
+2023-02-16,8.2,Drizzle
+2023-02-17,10.7,Drizzle
+2023-02-18,8.5,Drizzle
+2023-02-19,7.2,Drizzle
+2023-02-20,9.3,Drizzle
+2023-02-21,9.7,Drizzle
+2023-02-22,11.1,Partly Cloudy
+2023-02-23,8.1,Drizzle
+2023-02-24,5.1,Unknown
+2023-02-25,3.4,Unknown
+2023-02-26,3.8,Partly Cloudy
+2023-02-27,4.6,Partly Cloudy
+2023-02-28,5.5,Partly Cloudy
+2023-03-01,7.2,Partly Cloudy
+2023-03-02,4.4,Partly Cloudy
+2023-03-03,5.2,Partly Cloudy
+2023-03-04,5.6,Partly Cloudy
+2023-03-05,3.8,Unknown
+2023-03-06,4.3,Unknown
+2023-03-07,4.8,Unknown
+2023-03-08,3.3,Unknown
+2023-03-09,3.7,Unknown
+2023-03-10,1.3,Unknown
+2023-03-11,4.0,Unknown
+2023-03-12,6.2,Unknown
+2023-03-13,15.4,Drizzle
+2023-03-14,10.8,Drizzle
+2023-03-15,5.1,Unknown
+2023-03-16,8.3,Partly Cloudy
+2023-03-17,15.2,Partly Cloudy
+2023-03-18,15.3,Drizzle
+2023-03-19,14.7,Drizzle
+2023-03-20,10.0,Drizzle
+2023-03-21,10.4,Drizzle
+2023-03-22,14.7,Drizzle
+2023-03-23,13.1,Drizzle
+2023-03-24,13.8,Drizzle
+2023-03-25,10.2,Drizzle
+2023-03-26,9.6,Drizzle
+2023-03-27,6.0,Unknown
+2023-03-28,7.1,Drizzle
+2023-03-29,9.9,Drizzle
+2023-03-30,15.0,Drizzle
+2023-03-31,11.9,Drizzle
+2023-04-01,8.1,Drizzle
+2023-04-02,7.4,Partly Cloudy
+2023-04-03,6.3,Partly Cloudy
+2023-04-04,6.9,Partly Cloudy
+2023-04-05,8.1,Drizzle
+2023-04-06,11.5,Partly Cloudy
+2023-04-07,9.8,Partly Cloudy
+2023-04-08,10.0,Drizzle
+2023-04-09,11.7,Partly Cloudy
+2023-04-10,16.2,Partly Cloudy
+2023-04-11,12.5,Drizzle
+2023-04-12,11.2,Drizzle
+2023-04-13,12.3,Drizzle
+2023-04-14,11.6,Drizzle
+2023-04-15,13.2,Drizzle
+2023-04-16,10.7,Partly Cloudy
+2023-04-17,12.9,Partly Cloudy
+2023-04-18,10.6,Partly Cloudy
+2023-04-19,11.0,Drizzle
+2023-04-20,12.8,Drizzle
+2023-04-21,18.6,Partly Cloudy
+2023-04-22,21.0,Partly Cloudy
+2023-04-23,17.1,Drizzle
+2023-04-24,13.4,Drizzle
+2023-04-25,9.0,Drizzle
+2023-04-26,9.1,Drizzle
+2023-04-27,10.0,Drizzle
+2023-04-28,14.3,Drizzle
+2023-04-29,14.7,Drizzle
+2023-04-30,12.3,Partly Cloudy
+2023-05-01,17.2,Partly Cloudy
+2023-05-02,10.3,Partly Cloudy
+2023-05-03,12.1,Partly Cloudy
+2023-05-04,15.2,Partly Cloudy
+2023-05-05,16.0,Drizzle
+2023-05-06,10.9,Drizzle
+2023-05-07,15.6,Partly Cloudy
+2023-05-08,17.7,Partly Cloudy
+2023-05-09,19.6,Partly Cloudy
+2023-05-10,15.6,Drizzle
+2023-05-11,18.1,Drizzle
+2023-05-12,21.5,Partly Cloudy
+2023-05-13,21.2,Partly Cloudy
+2023-05-14,20.9,Partly Cloudy
+2023-05-15,21.0,Partly Cloudy
+2023-05-16,13.5,Drizzle
+2023-05-17,12.5,Partly Cloudy
+2023-05-18,13.4,Partly Cloudy
+2023-05-19,17.1,Drizzle
+2023-05-20,16.4,Partly Cloudy
+2023-05-21,24.8,Drizzle
+2023-05-22,26.9,Drizzle
+2023-05-23,16.7,Drizzle
+2023-05-24,16.5,Drizzle
+2023-05-25,18.3,Partly Cloudy
+2023-05-26,16.1,Partly Cloudy
+2023-05-27,19.8,Partly Cloudy
+2023-05-28,21.8,Partly Cloudy
+2023-05-29,18.5,Partly Cloudy
+2023-05-30,17.7,Partly Cloudy
+2023-05-31,22.9,Partly Cloudy
+2023-06-01,16.7,Partly Cloudy
+2023-06-02,18.4,Drizzle
+2023-06-03,18.7,Partly Cloudy
+2023-06-04,22.5,Partly Cloudy
+2023-06-05,23.6,Partly Cloudy
+2023-06-06,24.5,Partly Cloudy
+2023-06-07,25.6,Partly Cloudy
+2023-06-08,25.8,Drizzle
+2023-06-09,25.6,Partly Cloudy
+2023-06-10,26.7,Partly Cloudy
+2023-06-11,25.9,Partly Cloudy
+2023-06-12,26.1,Partly Cloudy
+2023-06-13,24.7,Clear
+2023-06-14,23.4,Partly Cloudy
+2023-06-15,23.1,Drizzle
+2023-06-16,21.7,Drizzle
+2023-06-17,23.4,Drizzle
+2023-06-18,26.1,Partly Cloudy
+2023-06-19,27.3,Drizzle
+2023-06-20,27.1,Partly Cloudy
+2023-06-21,26.0,Drizzle
+2023-06-22,25.9,Drizzle
+2023-06-23,22.5,Drizzle
+2023-06-24,24.4,Drizzle
+2023-06-25,27.0,Drizzle
+2023-06-26,26.0,Drizzle
+2023-06-27,19.5,Drizzle
+2023-06-28,22.3,Drizzle
+2023-06-29,22.8,Drizzle
+2023-06-30,21.5,Drizzle
+2023-07-01,19.4,Drizzle
+2023-07-02,19.7,Drizzle
+2023-07-03,18.4,Drizzle
+2023-07-04,18.2,Drizzle
+2023-07-05,19.9,Drizzle
+2023-07-06,19.2,Drizzle
+2023-07-07,25.3,Partly Cloudy
+2023-07-08,28.4,Clear
+2023-07-09,31.0,Partly Cloudy
+2023-07-10,24.1,Drizzle
+2023-07-11,28.6,Drizzle
+2023-07-12,22.7,Drizzle
+2023-07-13,21.2,Drizzle
+2023-07-14,22.8,Drizzle
+2023-07-15,29.9,Drizzle
+2023-07-16,23.7,Drizzle
+2023-07-17,21.2,Drizzle
+2023-07-18,21.4,Drizzle
+2023-07-19,19.5,Drizzle
+2023-07-20,19.0,Drizzle
+2023-07-21,20.5,Drizzle
+2023-07-22,18.6,Drizzle
+2023-07-23,19.1,Drizzle
+2023-07-24,22.6,Drizzle
+2023-07-25,18.9,Drizzle
+2023-07-26,17.4,Drizzle
+2023-07-27,17.6,Drizzle
+2023-07-28,20.7,Drizzle
+2023-07-29,22.5,Drizzle
+2023-07-30,20.6,Drizzle
+2023-07-31,19.2,Drizzle
+2023-08-01,19.6,Drizzle
+2023-08-02,19.9,Drizzle
+2023-08-03,20.1,Drizzle
+2023-08-04,20.4,Drizzle
+2023-08-05,20.8,Drizzle
+2023-08-06,18.2,Drizzle
+2023-08-07,17.2,Drizzle
+2023-08-08,17.7,Drizzle
+2023-08-09,18.8,Drizzle
+2023-08-10,19.4,Drizzle
+2023-08-11,25.2,Partly Cloudy
+2023-08-12,23.4,Drizzle
+2023-08-13,23.1,Drizzle
+2023-08-14,26.7,Partly Cloudy
+2023-08-15,26.1,Drizzle
+2023-08-16,23.2,Partly Cloudy
+2023-08-17,18.2,Drizzle
+2023-08-18,26.5,Drizzle
+2023-08-19,29.5,Drizzle
+2023-08-20,24.7,Partly Cloudy
+2023-08-21,23.7,Partly Cloudy
+2023-08-22,24.6,Drizzle
+2023-08-23,23.2,Partly Cloudy
+2023-08-24,24.7,Drizzle
+2023-08-25,22.8,Drizzle
+2023-08-26,20.2,Drizzle
+2023-08-27,20.5,Drizzle
+2023-08-28,19.8,Drizzle
+2023-08-29,18.7,Drizzle
+2023-08-30,19.4,Drizzle
+2023-08-31,17.2,Drizzle
+2023-09-01,19.6,Drizzle
+2023-09-02,21.2,Partly Cloudy
+2023-09-03,19.9,Partly Cloudy
+2023-09-04,23.0,Partly Cloudy
+2023-09-05,27.2,Partly Cloudy
+2023-09-06,28.2,Clear
+2023-09-07,26.8,Partly Cloudy
+2023-09-08,27.9,Clear
+2023-09-09,28.6,Partly Cloudy
+2023-09-10,25.0,Partly Cloudy
+2023-09-11,27.8,Partly Cloudy
+2023-09-12,22.8,Drizzle
+2023-09-13,17.2,Drizzle
+2023-09-14,18.2,Partly Cloudy
+2023-09-15,20.9,Partly Cloudy
+2023-09-16,23.4,Partly Cloudy
+2023-09-17,24.4,Partly Cloudy
+2023-09-18,23.6,Drizzle
+2023-09-19,19.0,Partly Cloudy
+2023-09-20,23.3,Drizzle
+2023-09-21,25.6,Drizzle
+2023-09-22,18.2,Drizzle
+2023-09-23,17.0,Drizzle
+2023-09-24,17.8,Drizzle
+2023-09-25,19.8,Partly Cloudy
+2023-09-26,21.2,Partly Cloudy
+2023-09-27,23.1,Partly Cloudy
+2023-09-28,23.2,Partly Cloudy
+2023-09-29,23.0,Drizzle
+2023-09-30,18.0,Partly Cloudy
+2023-10-01,17.7,Drizzle
+2023-10-02,22.7,Partly Cloudy
+2023-10-03,20.5,Drizzle
+2023-10-04,17.0,Drizzle
+2023-10-05,16.2,Drizzle
+2023-10-06,17.3,Drizzle
+2023-10-07,17.2,Drizzle
+2023-10-08,14.8,Drizzle
+2023-10-09,14.3,Drizzle
+2023-10-10,18.4,Drizzle
+2023-10-11,19.3,Drizzle
+2023-10-12,15.3,Drizzle
+2023-10-13,22.3,Drizzle
+2023-10-14,17.0,Drizzle
+2023-10-15,9.7,Drizzle
+2023-10-16,10.6,Drizzle
+2023-10-17,11.4,Partly Cloudy
+2023-10-18,10.9,Partly Cloudy
+2023-10-19,7.6,Drizzle
+2023-10-20,7.1,Drizzle
+2023-10-21,13.7,Drizzle
+2023-10-22,13.9,Drizzle
+2023-10-23,13.5,Partly Cloudy
+2023-10-24,13.2,Drizzle
+2023-10-25,13.2,Drizzle
+2023-10-26,10.7,Drizzle
+2023-10-27,10.0,Drizzle
+2023-10-28,10.5,Drizzle
+2023-10-29,15.7,Drizzle
+2023-10-30,14.9,Drizzle
+2023-10-31,11.6,Drizzle
+2023-11-01,11.5,Drizzle
+2023-11-02,13.7,Drizzle
+2023-11-03,11.2,Partly Cloudy
+2023-11-04,10.5,Drizzle
+2023-11-05,11.4,Drizzle
+2023-11-06,10.4,Drizzle
+2023-11-07,10.3,Drizzle
+2023-11-08,10.3,Drizzle
+2023-11-09,10.3,Drizzle
+2023-11-10,8.9,Drizzle
+2023-11-11,7.3,Drizzle
+2023-11-12,7.9,Drizzle
+2023-11-13,8.7,Drizzle
+2023-11-14,10.6,Drizzle
+2023-11-15,8.3,Drizzle
+2023-11-16,8.2,Drizzle
+2023-11-17,5.6,Partly Cloudy
+2023-11-18,6.0,Drizzle
+2023-11-19,11.0,Drizzle
+2023-11-20,10.7,Drizzle
+2023-11-21,8.1,Drizzle
+2023-11-22,3.1,Drizzle
+2023-11-23,11.6,Drizzle
+2023-11-24,6.7,Unknown
+2023-11-25,4.9,Unknown
+2023-11-26,2.0,Drizzle
+2023-11-27,1.2,Unknown
+2023-11-28,-0.1,Unknown
+2023-11-29,1.3,Unknown
+2023-11-30,-0.9,Partly Cloudy
+2023-12-01,0.2,Unknown
+2023-12-02,-0.1,Unknown
+2023-12-03,-0.7,Unknown
+2023-12-04,-0.5,Unknown
+2023-12-05,-0.3,Unknown
+2023-12-06,0.8,Drizzle
+2023-12-07,1.2,Partly Cloudy
+2023-12-08,0.6,Unknown
+2023-12-09,4.8,Drizzle
+2023-12-10,7.7,Unknown
+2023-12-11,8.4,Drizzle
+2023-12-12,5.6,Drizzle
+2023-12-13,4.8,Drizzle
+2023-12-14,3.4,Drizzle
+2023-12-15,6.7,Drizzle
+2023-12-16,8.0,Drizzle
+2023-12-17,9.5,Partly Cloudy
+2023-12-18,7.7,Drizzle
+2023-12-19,7.2,Drizzle
+2023-12-20,6.4,Drizzle
+2023-12-21,8.5,Unknown
+2023-12-22,4.4,Unknown
+2023-12-23,3.4,Unknown
+2023-12-24,11.0,Drizzle
+2023-12-25,10.1,Drizzle
+2023-12-26,8.7,Drizzle
+2023-12-27,5.6,Drizzle
+2023-12-28,10.7,Drizzle
+2023-12-29,9.7,Drizzle
+2023-12-30,6.7,Unknown
+2023-12-31,8.0,Drizzle
+2024-01-01,7.0,Drizzle
+2024-01-02,6.8,Drizzle
+2024-01-03,9.1,Drizzle
+2024-01-04,7.0,Unknown
+2024-01-05,0.6,Unknown
+2024-01-06,0.0,Unknown
+2024-01-07,-0.9,Unknown
+2024-01-08,-1.1,Unknown
+2024-01-09,-3.7,Partly Cloudy
+2024-01-10,-4.6,Partly Cloudy
+2024-01-11,1.9,Partly Cloudy
+2024-01-12,2.8,Partly Cloudy
+2024-01-13,3.2,Drizzle
+2024-01-14,3.4,Unknown
+2024-01-15,1.7,Unknown
+2024-01-16,1.7,Unknown
+2024-01-17,-0.4,Partly Cloudy
+2024-01-18,2.2,Partly Cloudy
+2024-01-19,2.2,Unknown
+2024-01-20,3.2,Partly Cloudy
+2024-01-21,4.4,Partly Cloudy
+2024-01-22,9.4,Drizzle
+2024-01-23,7.5,Unknown
+2024-01-24,11.6,Drizzle
+2024-01-25,8.1,Drizzle
+2024-01-26,9.3,Drizzle
+2024-01-27,6.8,Partly Cloudy
+2024-01-28,6.5,Partly Cloudy
+2024-01-29,9.0,Partly Cloudy
+2024-01-30,9.9,Drizzle
+2024-01-31,8.2,Drizzle
+2024-02-01,7.6,Drizzle
+2024-02-02,8.3,Drizzle
+2024-02-03,10.3,Drizzle
+2024-02-04,7.7,Drizzle
+2024-02-05,8.7,Drizzle
+2024-02-06,10.0,Drizzle
+2024-02-07,5.6,Drizzle
+2024-02-08,3.9,Unknown
+2024-02-09,4.2,Unknown
+2024-02-10,9.1,Drizzle
+2024-02-11,6.2,Drizzle
+2024-02-12,8.1,Drizzle
+2024-02-13,7.2,Drizzle
+2024-02-14,10.5,Drizzle
+2024-02-15,12.1,Drizzle
+2024-02-16,15.0,Drizzle
+2024-02-17,9.1,Drizzle
+2024-02-18,8.2,Drizzle
+2024-02-19,9.0,Drizzle
+2024-02-20,9.4,Drizzle
+2024-02-21,9.7,Drizzle
+2024-02-22,11.5,Drizzle
+2024-02-23,10.6,Drizzle
+2024-02-24,8.4,Drizzle
+2024-02-25,7.6,Unknown
+2024-02-26,7.4,Partly Cloudy
+2024-02-27,5.9,Partly Cloudy
+2024-02-28,8.3,Partly Cloudy
+2024-02-29,11.3,Partly Cloudy
+2024-03-01,12.2,Partly Cloudy
+2024-03-02,12.9,Drizzle
+2024-03-03,12.8,Drizzle
+2024-03-04,13.3,Partly Cloudy
+2024-03-05,7.6,Partly Cloudy
+2024-03-06,7.1,Partly Cloudy
+2024-03-07,7.4,Partly Cloudy
+2024-03-08,7.6,Clear
+2024-03-09,9.3,Partly Cloudy
+2024-03-10,11.8,Partly Cloudy
+2024-03-11,10.4,Drizzle
+2024-03-12,10.8,Partly Cloudy
+2024-03-13,11.8,Drizzle
+2024-03-14,15.8,Drizzle
+2024-03-15,14.6,Drizzle
+2024-03-16,10.0,Drizzle
+2024-03-17,8.5,Partly Cloudy
+2024-03-18,7.9,Partly Cloudy
+2024-03-19,10.8,Partly Cloudy
+2024-03-20,14.4,Drizzle
+2024-03-21,10.2,Drizzle
+2024-03-22,11.3,Drizzle
+2024-03-23,8.9,Drizzle
+2024-03-24,8.0,Unknown
+2024-03-25,9.1,Drizzle
+2024-03-26,12.1,Partly Cloudy
+2024-03-27,16.3,Partly Cloudy
+2024-03-28,12.3,Drizzle
+2024-03-29,11.6,Drizzle
+2024-03-30,19.6,Partly Cloudy
+2024-03-31,14.7,Drizzle
+2024-04-01,12.1,Drizzle
+2024-04-02,11.8,Drizzle
+2024-04-03,9.1,Drizzle
+2024-04-04,12.2,Drizzle
+2024-04-05,16.7,Drizzle
+2024-04-06,21.6,Partly Cloudy
+2024-04-07,20.2,Drizzle
+2024-04-08,19.4,Drizzle
+2024-04-09,19.1,Drizzle
+2024-04-10,13.5,Drizzle
+2024-04-11,13.9,Drizzle
+2024-04-12,18.4,Drizzle
+2024-04-13,20.3,Partly Cloudy
+2024-04-14,16.9,Partly Cloudy
+2024-04-15,12.9,Drizzle
+2024-04-16,9.8,Drizzle
+2024-04-17,10.7,Drizzle
+2024-04-18,11.0,Drizzle
+2024-04-19,9.0,Drizzle
+2024-04-20,7.3,Drizzle
+2024-04-21,8.5,Drizzle
+2024-04-22,7.1,Unknown
+2024-04-23,7.9,Unknown
+2024-04-24,7.1,Drizzle
+2024-04-25,9.2,Drizzle
+2024-04-26,9.7,Drizzle
+2024-04-27,17.2,Partly Cloudy
+2024-04-28,20.6,Drizzle
+2024-04-29,18.3,Partly Cloudy
+2024-04-30,22.7,Partly Cloudy
+2024-05-01,24.5,Partly Cloudy
+2024-05-02,24.2,Partly Cloudy
+2024-05-03,21.7,Drizzle
+2024-05-04,17.9,Partly Cloudy
+2024-05-05,16.4,Drizzle
+2024-05-06,16.6,Drizzle
+2024-05-07,16.0,Partly Cloudy
+2024-05-08,16.0,Partly Cloudy
+2024-05-09,18.1,Partly Cloudy
+2024-05-10,19.9,Drizzle
+2024-05-11,17.9,Drizzle
+2024-05-12,19.9,Partly Cloudy
+2024-05-13,23.0,Partly Cloudy
+2024-05-14,24.1,Clear
+2024-05-15,24.4,Clear
+2024-05-16,25.4,Partly Cloudy
+2024-05-17,24.2,Partly Cloudy
+2024-05-18,21.1,Drizzle
+2024-05-19,18.8,Drizzle
+2024-05-20,21.4,Drizzle
+2024-05-21,23.0,Drizzle
+2024-05-22,21.0,Drizzle
+2024-05-23,21.0,Drizzle
+2024-05-24,21.3,Drizzle
+2024-05-25,19.7,Drizzle
+2024-05-26,22.4,Drizzle
+2024-05-27,21.4,Drizzle
+2024-05-28,16.7,Drizzle
+2024-05-29,17.7,Drizzle
+2024-05-30,19.0,Drizzle
+2024-05-31,19.7,Drizzle
+2024-06-01,22.9,Drizzle
+2024-06-02,20.5,Drizzle
+2024-06-03,17.1,Drizzle
+2024-06-04,17.8,Drizzle
+2024-06-05,16.9,Drizzle
+2024-06-06,17.0,Drizzle
+2024-06-07,17.4,Drizzle
+2024-06-08,19.4,Partly Cloudy
+2024-06-09,15.8,Drizzle
+2024-06-10,14.6,Drizzle
+2024-06-11,14.6,Drizzle
+2024-06-12,14.3,Drizzle
+2024-06-13,14.5,Drizzle
+2024-06-14,20.0,Drizzle
+2024-06-15,17.9,Drizzle
+2024-06-16,19.6,Drizzle
+2024-06-17,20.4,Drizzle
+2024-06-18,20.7,Drizzle
+2024-06-19,18.5,Drizzle
+2024-06-20,20.2,Partly Cloudy
+2024-06-21,22.9,Drizzle
+2024-06-22,21.5,Drizzle
+2024-06-23,21.0,Drizzle
+2024-06-24,23.2,Partly Cloudy
+2024-06-25,25.9,Partly Cloudy
+2024-06-26,28.4,Partly Cloudy
+2024-06-27,29.8,Drizzle
+2024-06-28,22.9,Drizzle
+2024-06-29,25.2,Partly Cloudy
+2024-06-30,19.7,Drizzle
+2024-07-01,17.9,Drizzle
+2024-07-02,16.7,Drizzle
+2024-07-03,17.0,Drizzle
+2024-07-04,18.1,Drizzle
+2024-07-05,18.5,Drizzle
+2024-07-06,25.5,Drizzle
+2024-07-07,19.5,Drizzle
+2024-07-08,21.3,Drizzle
+2024-07-09,28.6,Partly Cloudy
+2024-07-10,24.0,Drizzle
+2024-07-11,24.1,Drizzle
+2024-07-12,23.3,Drizzle
+2024-07-13,19.3,Drizzle
+2024-07-14,21.5,Drizzle
+2024-07-15,24.3,Partly Cloudy
+2024-07-16,24.5,Drizzle
+2024-07-17,20.5,Drizzle
+2024-07-18,23.5,Partly Cloudy
+2024-07-19,26.9,Partly Cloudy
+2024-07-20,28.3,Partly Cloudy
+2024-07-21,29.9,Drizzle
+2024-07-22,21.2,Drizzle
+2024-07-23,23.2,Drizzle
+2024-07-24,20.7,Partly Cloudy
+2024-07-25,21.8,Partly Cloudy
+2024-07-26,22.2,Drizzle
+2024-07-27,21.5,Drizzle
+2024-07-28,21.5,Drizzle
+2024-07-29,22.9,Partly Cloudy
+2024-07-30,27.0,Partly Cloudy
+2024-07-31,25.8,Partly Cloudy
+2024-08-01,25.2,Partly Cloudy
+2024-08-02,20.5,Drizzle
+2024-08-03,25.5,Drizzle
+2024-08-04,20.4,Drizzle
+2024-08-05,22.2,Drizzle
+2024-08-06,26.3,Partly Cloudy
+2024-08-07,27.1,Drizzle
+2024-08-08,22.7,Drizzle
+2024-08-09,22.4,Drizzle
+2024-08-10,22.8,Drizzle
+2024-08-11,23.3,Drizzle
+2024-08-12,24.7,Clear
+2024-08-13,29.0,Partly Cloudy
+2024-08-14,26.1,Drizzle
+2024-08-15,24.5,Drizzle
+2024-08-16,22.8,Drizzle
+2024-08-17,20.0,Drizzle
+2024-08-18,19.7,Drizzle
+2024-08-19,20.7,Partly Cloudy
+2024-08-20,24.8,Partly Cloudy
+2024-08-21,19.2,Drizzle
+2024-08-22,22.7,Drizzle
+2024-08-23,25.5,Drizzle
+2024-08-24,28.4,Partly Cloudy
+2024-08-25,23.9,Drizzle
+2024-08-26,21.4,Partly Cloudy
+2024-08-27,24.2,Partly Cloudy
+2024-08-28,27.3,Partly Cloudy
+2024-08-29,30.2,Partly Cloudy
+2024-08-30,19.7,Drizzle
+2024-08-31,21.0,Partly Cloudy
+2024-09-01,23.1,Partly Cloudy
+2024-09-02,24.5,Partly Cloudy
+2024-09-03,27.9,Drizzle
+2024-09-04,28.1,Drizzle
+2024-09-05,30.2,Partly Cloudy
+2024-09-06,28.4,Partly Cloudy
+2024-09-07,29.4,Partly Cloudy
+2024-09-08,28.8,Drizzle
+2024-09-09,19.7,Drizzle
+2024-09-10,17.4,Drizzle
+2024-09-11,15.1,Drizzle
+2024-09-12,14.4,Drizzle
+2024-09-13,15.7,Partly Cloudy
+2024-09-14,15.5,Partly Cloudy
+2024-09-15,17.4,Partly Cloudy
+2024-09-16,18.3,Partly Cloudy
+2024-09-17,19.0,Partly Cloudy
+2024-09-18,21.4,Partly Cloudy
+2024-09-19,21.6,Partly Cloudy
+2024-09-20,22.2,Clear
+2024-09-21,22.2,Partly Cloudy
+2024-09-22,22.5,Partly Cloudy
+2024-09-23,22.3,Drizzle
+2024-09-24,17.2,Drizzle
+2024-09-25,15.7,Drizzle
+2024-09-26,18.6,Drizzle
+2024-09-27,16.7,Drizzle
+2024-09-28,12.6,Drizzle
+2024-09-29,13.9,Partly Cloudy
+2024-09-30,14.1,Partly Cloudy
+2024-10-01,12.2,Drizzle
+2024-10-02,13.7,Drizzle
+2024-10-03,13.2,Drizzle
+2024-10-04,13.8,Partly Cloudy
+2024-10-05,13.9,Partly Cloudy
+2024-10-06,13.0,Partly Cloudy
+2024-10-07,17.6,Drizzle
+2024-10-08,18.9,Drizzle
+2024-10-09,16.0,Drizzle
+2024-10-10,14.6,Drizzle
+2024-10-11,11.6,Drizzle
+2024-10-12,12.6,Partly Cloudy
+2024-10-13,11.7,Drizzle
+2024-10-14,10.9,Drizzle
+2024-10-15,11.6,Partly Cloudy
+2024-10-16,13.5,Partly Cloudy
+2024-10-17,16.0,Drizzle
+2024-10-18,16.7,Partly Cloudy
+2024-10-19,16.3,Drizzle
+2024-10-20,17.3,Partly Cloudy
+2024-10-21,16.8,Drizzle
+2024-10-22,14.5,Drizzle
+2024-10-23,13.2,Partly Cloudy
+2024-10-24,13.9,Partly Cloudy
+2024-10-25,16.6,Partly Cloudy
+2024-10-26,15.7,Partly Cloudy
+2024-10-27,13.5,Drizzle
+2024-10-28,13.7,Drizzle
+2024-10-29,13.6,Drizzle
+2024-10-30,13.6,Drizzle
+2024-10-31,13.2,Drizzle
+2024-11-01,12.9,Drizzle
+2024-11-02,11.2,Partly Cloudy
+2024-11-03,9.0,Partly Cloudy
+2024-11-04,10.8,Partly Cloudy
+2024-11-05,10.6,Partly Cloudy
+2024-11-06,8.3,Partly Cloudy
+2024-11-07,7.0,Partly Cloudy
+2024-11-08,7.3,Partly Cloudy
+2024-11-09,6.0,Partly Cloudy
+2024-11-10,7.2,Drizzle
+2024-11-11,7.7,Drizzle
+2024-11-12,9.2,Partly Cloudy
+2024-11-13,8.1,Drizzle
+2024-11-14,10.6,Drizzle
+2024-11-15,10.3,Partly Cloudy
+2024-11-16,8.7,Drizzle
+2024-11-17,7.5,Unknown
+2024-11-18,5.7,Drizzle
+2024-11-19,1.9,Unknown
+2024-11-20,3.0,Unknown
+2024-11-21,2.7,Unknown
+2024-11-22,3.6,Unknown
+2024-11-23,4.1,Unknown
+2024-11-24,14.7,Drizzle
+2024-11-25,15.8,Drizzle
+2024-11-26,9.6,Drizzle
+2024-11-27,8.4,Drizzle
+2024-11-28,7.9,Drizzle
+2024-11-29,6.0,Partly Cloudy
+2024-11-30,4.5,Partly Cloudy
+2024-12-01,4.3,Partly Cloudy
+2024-12-02,8.5,Drizzle
+2024-12-03,7.5,Drizzle
+2024-12-04,4.8,Drizzle
+2024-12-05,4.3,Drizzle
+2024-12-06,8.0,Drizzle
+2024-12-07,5.3,Drizzle
+2024-12-08,5.7,Partly Cloudy
+2024-12-09,5.6,Drizzle
+2024-12-10,5.4,Partly Cloudy
+2024-12-11,3.7,Partly Cloudy
+2024-12-12,3.4,Drizzle
+2024-12-13,2.2,Partly Cloudy
+2024-12-14,3.6,Unknown
+2024-12-15,9.3,Drizzle
+2024-12-16,10.4,Drizzle
+2024-12-17,9.2,Partly Cloudy
+2024-12-18,11.8,Drizzle
+2024-12-19,12.1,Drizzle
+2024-12-20,6.7,Drizzle
+2024-12-21,7.1,Drizzle
+2024-12-22,7.2,Unknown
+2024-12-23,6.7,Unknown
+2024-12-24,4.8,Drizzle
+2024-12-25,7.3,Drizzle
+2024-12-26,8.1,Drizzle
+2024-12-27,6.5,Partly Cloudy
+2024-12-28,3.7,Partly Cloudy
+2024-12-29,2.9,Partly Cloudy
+2024-12-30,5.8,Drizzle
+2024-12-31,6.3,Partly Cloudy
+2025-01-01,7.2,Drizzle
+2025-01-02,5.1,Drizzle
+2025-01-03,1.5,Unknown
+2025-01-04,0.6,Unknown
+2025-01-05,0.4,Unknown
+2025-01-06,11.2,Drizzle
+2025-01-07,4.8,Unknown
+2025-01-08,4.3,Unknown
+2025-01-09,1.3,Unknown
+2025-01-10,2.5,Unknown
+2025-01-11,0.9,Partly Cloudy
+2025-01-12,1.8,Partly Cloudy
+2025-01-13,0.8,Partly Cloudy
+2025-01-14,3.3,Drizzle
+2025-01-15,5.6,Partly Cloudy
+2025-01-16,4.3,Partly Cloudy
+2025-01-17,1.5,Partly Cloudy
+2025-01-18,0.2,Partly Cloudy
+2025-01-19,3.0,Partly Cloudy
+2025-01-20,0.5,Partly Cloudy
+2025-01-21,1.8,Partly Cloudy
+2025-01-22,3.6,Partly Cloudy
+2025-01-23,5.2,Drizzle
+2025-01-24,7.1,Drizzle
+2025-01-25,8.7,Drizzle
+2025-01-26,2.8,Unknown
+2025-01-27,11.4,Drizzle
+2025-01-28,8.7,Drizzle
+2025-01-29,6.7,Drizzle
+2025-01-30,6.7,Drizzle
+2025-01-31,6.0,Drizzle
+2025-02-01,5.6,Partly Cloudy
+2025-02-02,2.2,Partly Cloudy
+2025-02-03,3.3,Partly Cloudy
+2025-02-04,4.1,Partly Cloudy
+2025-02-05,6.7,Partly Cloudy
+2025-02-06,5.9,Partly Cloudy
+2025-02-07,3.4,Partly Cloudy
+2025-02-08,4.1,Partly Cloudy
+2025-02-09,3.7,Partly Cloudy
+2025-02-10,3.7,Partly Cloudy
+2025-02-11,2.6,Partly Cloudy
+2025-02-12,1.2,Partly Cloudy
+2025-02-13,1.8,Unknown
+2025-02-14,1.6,Unknown
+2025-02-15,1.8,Unknown
+2025-02-16,1.3,Partly Cloudy
+2025-02-17,0.5,Partly Cloudy
+2025-02-18,1.8,Clear
+2025-02-19,3.2,Partly Cloudy
+2025-02-20,5.1,Partly Cloudy
+2025-02-21,11.8,Drizzle
+2025-02-22,11.5,Partly Cloudy
+2025-02-23,11.4,Partly Cloudy
+2025-02-24,11.6,Drizzle
+2025-02-25,11.3,Drizzle
+2025-02-26,9.0,Drizzle
+2025-02-27,6.9,Unknown
+2025-02-28,3.9,Drizzle
+2025-03-01,6.2,Partly Cloudy
+2025-03-02,7.4,Partly Cloudy
+2025-03-03,9.0,Partly Cloudy
+2025-03-04,9.9,Partly Cloudy
+2025-03-05,13.5,Partly Cloudy
+2025-03-06,15.6,Clear
+2025-03-07,16.9,Partly Cloudy
+2025-03-08,16.2,Partly Cloudy
+2025-03-09,14.7,Partly Cloudy
+2025-03-10,12.0,Clear
+2025-03-11,11.2,Partly Cloudy
+2025-03-12,7.1,Partly Cloudy
+2025-03-13,6.7,Drizzle
+2025-03-14,6.0,Unknown
+2025-03-15,7.5,Partly Cloudy
+2025-03-16,6.6,Drizzle
+2025-03-17,5.9,Partly Cloudy
+2025-03-18,7.7,Clear
+2025-03-19,11.8,Clear
+2025-03-20,16.6,Partly Cloudy
+2025-03-21,17.1,Clear
+2025-03-22,14.5,Clear
+2025-03-23,14.4,Partly Cloudy
+2025-03-24,14.9,Drizzle
+2025-03-25,10.4,Drizzle
+2025-03-26,12.7,Drizzle
+2025-03-27,11.8,Partly Cloudy
+2025-03-28,16.4,Clear
+2025-03-29,12.6,Partly Cloudy
+2025-03-30,9.4,Drizzle
+2025-03-31,10.9,Drizzle
+2025-04-01,13.0,Partly Cloudy
+2025-04-02,14.2,Partly Cloudy
+2025-04-03,16.7,Clear
+2025-04-04,19.1,Partly Cloudy
+2025-04-05,9.4,Partly Cloudy
+2025-04-06,7.8,Partly Cloudy
+2025-04-07,12.2,Partly Cloudy
+2025-04-08,13.1,Drizzle
+2025-04-09,13.2,Partly Cloudy
+2025-04-10,13.9,Partly Cloudy
+2025-04-11,14.7,Partly Cloudy
+2025-04-12,17.7,Partly Cloudy
+2025-04-13,17.6,Drizzle
+2025-04-14,16.4,Drizzle
+2025-04-15,21.9,Partly Cloudy
+2025-04-16,21.5,Drizzle
+2025-04-17,15.4,Drizzle
+2025-04-18,11.0,Drizzle
+2025-04-19,9.5,Drizzle
+2025-04-20,14.1,Partly Cloudy
+2025-04-21,16.5,Drizzle
+2025-04-22,16.1,Drizzle
+2025-04-23,16.1,Drizzle
+2025-04-24,13.9,Partly Cloudy
+2025-04-25,14.1,Partly Cloudy
+2025-04-26,16.1,Partly Cloudy
+2025-04-27,15.6,Clear
+2025-04-28,19.3,Partly Cloudy
+2025-04-29,20.0,Partly Cloudy
+2025-04-30,20.0,Partly Cloudy
+2025-05-01,24.5,Partly Cloudy
+2025-05-02,22.5,Drizzle
+2025-05-03,16.2,Partly Cloudy
+2025-05-04,12.7,Drizzle
+2025-05-05,11.2,Drizzle
+2025-05-06,14.5,Drizzle
+2025-05-07,15.5,Drizzle
+2025-05-08,15.9,Partly Cloudy
+2025-05-09,19.2,Partly Cloudy
+2025-05-10,18.2,Partly Cloudy
+2025-05-11,19.3,Clear
+2025-05-12,15.9,Partly Cloudy
+2025-05-13,19.5,Partly Cloudy
+2025-05-14,18.8,Partly Cloudy
+2025-05-15,15.2,Partly Cloudy
+2025-05-16,16.5,Drizzle
+2025-05-17,17.2,Drizzle
+2025-05-18,16.1,Drizzle
+2025-05-19,19.2,Drizzle
+2025-05-20,21.8,Partly Cloudy
+2025-05-21,17.2,Partly Cloudy
+2025-05-22,11.6,Drizzle
+2025-05-23,13.4,Drizzle
+2025-05-24,18.1,Drizzle
+2025-05-25,18.1,Drizzle
+2025-05-26,17.3,Drizzle
+2025-05-27,16.5,Drizzle
+2025-05-28,17.3,Drizzle
+2025-05-29,17.0,Drizzle
+2025-05-30,21.1,Drizzle
+2025-05-31,21.8,Drizzle
+2025-06-01,23.1,Drizzle
+2025-06-02,18.7,Drizzle
+2025-06-03,20.8,Partly Cloudy
+2025-06-04,23.1,Drizzle
+2025-06-05,20.1,Drizzle
+2025-06-06,18.2,Drizzle
+2025-06-07,17.3,Drizzle
+2025-06-08,15.2,Drizzle
+2025-06-09,16.7,Drizzle
+2025-06-10,15.0,Drizzle
+2025-06-11,17.1,Partly Cloudy
+2025-06-12,20.9,Clear
+2025-06-13,24.2,Partly Cloudy
+2025-06-14,28.4,Partly Cloudy
+2025-06-15,24.9,Drizzle
+2025-06-16,20.2,Drizzle
+2025-06-17,23.1,Partly Cloudy
+2025-06-18,22.8,Drizzle
+2025-06-19,19.6,Partly Cloudy
+2025-06-20,20.8,Partly Cloudy
+2025-06-21,27.0,Partly Cloudy
+2025-06-22,31.1,Drizzle
+2025-06-23,21.0,Drizzle
+2025-06-24,18.9,Drizzle
+2025-06-25,21.1,Drizzle
+2025-06-26,24.3,Drizzle
+2025-06-27,19.6,Drizzle
+2025-06-28,23.5,Drizzle
+2025-06-29,22.9,Drizzle
+2025-06-30,22.8,Partly Cloudy
+2025-07-01,30.8,Clear
+2025-07-02,34.1,Partly Cloudy
+2025-07-03,22.4,Drizzle
+2025-07-04,13.1,Partly Cloudy
