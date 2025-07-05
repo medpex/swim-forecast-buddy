@@ -1,0 +1,9 @@
+fastapi
+uvicorn[standard]
+scikit-learn
+pandas
+python-dotenv
+psycopg2-binary
+requests
+supabase
+SQLAlchemy
