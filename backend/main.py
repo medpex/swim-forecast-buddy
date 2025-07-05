@@ -5,32 +5,43 @@ from typing import List, Optional, Dict, Any
 from datetime import date, timedelta, datetime
 
 
-# Assuming services, predictor, schemas, and ml_trainer are in the same directory or accessible via PYTHONPATH
+# Assuming services, predictor, schemas, ml_trainer, and database are accessible
 try:
-    import services
-    import predictor
-    import schemas
-    import ml_trainer # For the retraining endpoint
-except ImportError:
-    print("Error: Could not import one or more backend modules (services, predictor, schemas, ml_trainer).")
+    from backend import services, predictor, schemas, ml_trainer, database
+    from sqlalchemy.orm import Session
+    from fastapi import Depends # Ensure Depends is imported
+except ImportError as e:
+    print(f"Error: Could not import one or more backend modules: {e}")
     print("Ensure these files exist and Python's import path is configured correctly.")
     # Fallback for direct uvicorn execution from root if backend is a module
-    from . import services
-    from . import predictor
-    from . import schemas
-    from . import ml_trainer
+    # This fallback might be too simplistic if complex relative imports are used within modules
+    from . import services, predictor, schemas, ml_trainer # type: ignore
+    from . import database # type: ignore
+    from sqlalchemy.orm import Session # type: ignore
+    from fastapi import Depends # type: ignore
 
 
-# --- Application Lifespan (for model loading) ---
+# --- Application Lifespan (for model loading and DB init) ---
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Load the ML model during startup
-    print("Application startup: Loading ML model...")
+    print("Application startup: Initializing database and loading ML model...")
+
+    # Initialize database tables
+    try:
+        # from backend.database import create_db_and_tables # Already imported above generally
+        database.create_db_and_tables()
+        print("Database tables checked/created.")
+    except Exception as e:
+        print(f"CRITICAL: Could not initialize database tables: {e}")
+        # Depending on policy, might want to prevent app startup or run in degraded mode
+
+    # Load the ML model
     predictor.load_trained_model()
     if predictor.loaded_model is None:
-        print("WARNING: ML Model could not be loaded at startup. Prediction endpoint might fail.")
+        print("WARNING: ML Model could not be loaded at startup. Prediction endpoint might fail if no model is present.")
     else:
         print("ML Model loaded successfully at startup.")
+
     yield
     # Clean up the ML model and other resources (if any) during shutdown (optional)
     print("Application shutdown.")
@@ -63,10 +74,13 @@ async def get_visitor_forecast(
     start_date: date = Query(None, description="Start date for the forecast (YYYY-MM-DD). Defaults to today."),
     end_date: date = Query(None, description="End date for the forecast (YYYY-MM-DD). Defaults to 7 days from start_date."),
     postal_code: Optional[str] = Query("10115", description="Postal code for the location (e.g., '10115' for Berlin)."),
-    country_code: Optional[str] = Query("DE", description="Country code for the location (e.g., 'DE' for Germany).")
+    country_code: Optional[str] = Query("DE", description="Country code for the location (e.g., 'DE' for Germany)."),
+    db: Session = Depends(database.get_db) # Add DB session dependency
 ):
     """
     Provides a visitor forecast based on weather predictions for the given date range and location.
+    Historical data for model context (if any part of the model uses it directly during prediction,
+    which our current simple predictor doesn't, but services for training do) is fetched via the db session.
     """
     if start_date is None:
         start_date = date.today()
@@ -173,10 +187,18 @@ async def get_visitor_forecast(
 
 
 @app.post("/api/retrain_model", status_code=202) # 202 Accepted
-async def trigger_retrain_model():
+async def trigger_retrain_model(db: Session = Depends(database.get_db)): # Add DB session dependency
     """
     Triggers the model retraining process. This is an asynchronous-like operation.
     The actual retraining happens in the background (conceptually).
+    The ml_trainer.train_model() will now need a db session as services.get_historical_visitor_data() requires it.
+    It's better if ml_trainer.py's train_model function is refactored to accept a db session,
+    or it creates its own session internally. For now, we assume ml_trainer.py handles its own session
+    if called as a script, but if train_model is a callable function, it should accept 'db'.
+    Let's modify ml_trainer.py in a subsequent step to manage its own session or accept one.
+    For this endpoint, if we were to pass 'db', ml_trainer.train_model would need to be:
+    ml_trainer.train_model(db=db)
+    Assuming ml_trainer.py is updated to create its own session for now for simplicity of this step.
     For this simple version, it will run synchronously but quickly return.
     """
     print("Retrain model endpoint called.")
@@ -224,7 +246,7 @@ if __name__ == "__main__":
 
     # This re-import attempt is mostly for the linter/static analysis if imports are tricky
     try:
-        from backend import services, predictor, schemas, ml_trainer
+        from backend import services, predictor, schemas, ml_trainer, database
     except ImportError:
         pass # Already handled by top-level imports
 

@@ -168,9 +168,9 @@ cd backend
 uvicorn app:app --reload
 ```
 
-## Starten mit Docker
+## Starten mit Docker (mit lokaler PostgreSQL-Datenbank)
 
-Diese Anleitung beschreibt, wie die Anwendung (Frontend und Backend) mithilfe von Docker und Docker Compose gestartet wird. Dies ist die empfohlene Methode für eine schnelle Inbetriebnahme und eine konsistente Entwicklungsumgebung.
+Diese Anleitung beschreibt, wie die Anwendung (Frontend, Backend und eine lokale PostgreSQL-Datenbank) mithilfe von Docker und Docker Compose gestartet wird. Dies ist die empfohlene Methode für eine vollständig eigenständige Inbetriebnahme und eine konsistente Entwicklungsumgebung.
 
 ### Voraussetzungen
 
@@ -181,45 +181,53 @@ Diese Anleitung beschreibt, wie die Anwendung (Frontend und Backend) mithilfe vo
 
 ### Einrichtung der Umgebungsvariablen
 
-Bevor Sie die Anwendung starten können, müssen Sie eine `.env`-Datei im Hauptverzeichnis des Projekts erstellen. Diese Datei enthält die notwendigen Konfigurationen für den Backend-Dienst.
+Bevor Sie die Anwendung starten können, müssen Sie eine `.env`-Datei im Hauptverzeichnis des Projekts erstellen. Diese Datei enthält die notwendigen Konfigurationen für den Backend-Dienst und die PostgreSQL-Datenbank.
 
 1.  **Erstellen Sie eine Kopie der Beispieldatei:**
     ```bash
     cp .env.example .env
     ```
-2.  **Bearbeiten Sie die `.env`-Datei** und tragen Sie Ihre tatsächlichen Zugangsdaten ein:
-    *   `SUPABASE_URL`: Ihre Supabase Projekt-URL.
-    *   `SUPABASE_KEY`: Ihr Supabase Service Role Key (dieser ist geheim und sollte sicher aufbewahrt werden).
+2.  **Bearbeiten Sie die `.env`-Datei** und tragen Sie Ihre gewünschten/tatsächlichen Zugangsdaten ein:
+    *   `POSTGRES_USER`: Benutzername für die PostgreSQL-Datenbank (z.B. `your_db_user`).
+    *   `POSTGRES_PASSWORD`: Passwort für den PostgreSQL-Benutzer (wählen Sie ein sicheres Passwort).
+    *   `POSTGRES_DB`: Name der zu erstellenden PostgreSQL-Datenbank (z.B. `swim_forecast_db`).
+    *   `DATABASE_URL`: Die Verbindungszeichenfolge, die das Backend verwendet, um sich mit der PostgreSQL-Datenbank zu verbinden. Diese sollte die oben genannten PostgreSQL-Zugangsdaten und den Service-Namen `db` (aus `docker-compose.yml`) als Host verwenden. Beispiel: `postgresql://your_db_user:your_db_password@db:5432/swim_forecast_db`.
     *   `OPENWEATHER_API_KEY`: Ihr API-Schlüssel für OpenWeatherMap.
 
-    **Hinweis:** Die Variable `VITE_API_BASE_URL` für das Frontend wird automatisch während des Docker-Build-Prozesses durch `docker-compose.yml` auf `http://backend:8000` gesetzt, um die Kommunikation zwischen Frontend- und Backend-Containern zu ermöglichen.
+    **Hinweis:** Die Variable `VITE_API_BASE_URL` für das Frontend wird automatisch während des Docker-Build-Prozesses durch `docker-compose.yml` auf `http://backend:8000` gesetzt.
 
 ### Anwendung bauen und starten
 
-1.  **Öffnen Sie ein Terminal** im Hauptverzeichnis des Projekts (wo sich die `docker-compose.yml`-Datei befindet).
-2.  **Bauen Sie die Docker-Images und starten Sie die Container** mit folgendem Befehl:
+1.  **Öffnen Sie ein Terminal** im Hauptverzeichnis des Projekts.
+2.  **Bauen Sie die Docker-Images und starten Sie die Container**:
     ```bash
     docker compose up --build -d
     ```
-    *   `--build`: Erzwingt das Bauen der Images, falls sie noch nicht existieren oder Änderungen vorgenommen wurden.
-    *   `-d`: Startet die Container im "detached mode" (im Hintergrund).
+    *   `--build`: Baut die Images neu, falls Änderungen an den Dockerfiles oder dem Code vorgenommen wurden.
+    *   `-d`: Startet die Container im Hintergrund.
+    *   Beim ersten Start wird die PostgreSQL-Datenbank initialisiert und die Tabellen vom Backend automatisch erstellt.
 
 ### Zugriff auf die Anwendung
 
-Nachdem die Container erfolgreich gestartet wurden:
+*   **Frontend**: `http://localhost:8080`
+*   **Backend API**: `http://localhost:8000` (API-Dokumentation: `http://localhost:8000/docs`)
+*   **PostgreSQL Datenbank (optional, für direktes Management)**: Erreichbar auf `localhost:5432`, falls der Port in `docker-compose.yml` freigegeben ist, mit den in `.env` festgelegten Zugangsdaten.
 
-*   **Frontend**: Die Webanwendung ist unter `http://localhost:8080` in Ihrem Browser erreichbar.
-*   **Backend API**: Die FastAPI-Backend-Schnittstelle ist unter `http://localhost:8000` verfügbar. Die API-Dokumentation (Swagger UI) finden Sie unter `http://localhost:8000/docs`.
+### Datenpersistenz
+
+Die PostgreSQL-Datenbank verwendet ein Docker-Volume (`postgres_data`), um die Daten persistent zu speichern. Das bedeutet, dass Ihre Datenbankdaten auch nach einem `docker compose down` und anschließendem `docker compose up` erhalten bleiben. Um die Datenbank vollständig zurückzusetzen (alle Daten löschen), müssen Sie das Volume manuell entfernen:
+```bash
+docker compose down -v # Stoppt Container und entfernt benannte Volumes
+# oder gezielt:
+# docker volume rm <projektname>_postgres_data # Der Projektname ist oft der Verzeichnisname
+```
 
 ### Anwendung stoppen
 
-Um die Anwendung zu stoppen und die Container zu entfernen:
-
-1.  Führen Sie im Terminal (im Hauptverzeichnis des Projekts) folgenden Befehl aus:
-    ```bash
-    docker compose down
-    ```
-    *   Wenn Sie auch die Docker-Volumes entfernen möchten (z.B. um einen sauberen Neustart zu erzwingen, obwohl in dieser Konfiguration keine kritischen Daten in Volumes gespeichert werden), können Sie `docker compose down -v` verwenden.
+```bash
+docker compose down
+```
+*   Um auch das Daten-Volume der Datenbank zu entfernen (Vorsicht: Datenverlust!), verwenden Sie `docker compose down -v`.
 
 ### Modelltraining (Optional)
 
@@ -245,15 +253,19 @@ Das Machine-Learning-Modell für die Besuchervorhersage wird beim ersten Start d
 ### Fehlerbehebung und häufige Probleme
 
 *   **`Cannot connect to the Docker daemon`**: Stellen Sie sicher, dass Docker Desktop läuft oder der Docker-Dienst auf Ihrem System aktiv ist und Sie die notwendigen Berechtigungen haben.
-*   **Port-Konflikte**: Wenn die Ports `8080` oder `8000` bereits auf Ihrem System verwendet werden, erhalten Sie eine Fehlermeldung. Sie können die Port-Mappings in der `docker-compose.yml`-Datei ändern (z.B. `"8081:80"` für das Frontend).
+*   **Port-Konflikte**: Wenn die Ports `8080`, `8000` oder `5432` (für PostgreSQL) bereits auf Ihrem System verwendet werden, erhalten Sie eine Fehlermeldung. Sie können die Port-Mappings in der `docker-compose.yml`-Datei ändern (z.B. `"8081:80"` für das Frontend).
 *   **Fehler im Backend-Container (siehe `docker compose logs backend`)**:
-    *   **`ValueError: SUPABASE_URL and SUPABASE_KEY must be set...`**: Überprüfen Sie, ob die `.env`-Datei korrekt erstellt wurde und die Variablen `SUPABASE_URL` und `SUPABASE_KEY` gesetzt sind.
+    *   **Fehler bei der Datenbankverbindung** (z.B. `OperationalError`, `connection refused`):
+        *   Stellen Sie sicher, dass der PostgreSQL-Container (`db`) läuft und gesund ist (`docker compose ps`).
+        *   Überprüfen Sie, ob die `DATABASE_URL` in Ihrer `.env`-Datei korrekt formatiert ist und mit den `POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_DB` Variablen übereinstimmt. Der Hostname in der `DATABASE_URL` muss `db` sein.
+        *   Überprüfen Sie die Logs des `db`-Containers (`docker compose logs db`) auf Initialisierungsfehler.
     *   **Fehler bei der Verbindung zu OpenWeatherMap**: Stellen Sie sicher, dass Ihr `OPENWEATHER_API_KEY` in der `.env`-Datei korrekt und gültig ist und der Container Internetzugriff hat.
     *   **Modell nicht gefunden (`Model file not found`)**: Wenn Sie das Modell noch nicht trainiert haben, wird diese Meldung beim Start oder bei der ersten Vorhersageanfrage angezeigt. Verwenden Sie den Endpunkt `/api/retrain_model` oder führen Sie `ml_trainer.py` wie oben beschrieben aus.
 *   **Frontend kann Backend nicht erreichen (Netzwerkfehler in der Browserkonsole)**:
     *   Stellen Sie sicher, dass der Backend-Container läuft (`docker compose ps`).
     *   Überprüfen Sie die `VITE_API_BASE_URL`-Einstellung in `docker-compose.yml` (sollte `http://backend:8000` sein). Wenn Sie diese geändert haben, müssen Sie möglicherweise die Images neu bauen (`docker compose build frontend`).
 *   **Lange Build-Zeiten**: Der erste Build kann einige Zeit in Anspruch nehmen, da alle Abhängigkeiten heruntergeladen und kompiliert werden müssen. Nachfolgende Builds sind dank Docker's Layer-Caching in der Regel schneller.
+*   **PostgreSQL Initialisierungsfehler**: Wenn der `db`-Container nicht startet, überprüfen Sie die Logs (`docker compose logs db`). Häufige Ursachen sind falsche Konfigurationen in den `POSTGRES_*` Umgebungsvariablen oder Probleme mit dem Daten-Volume (selten beim ersten Start).
 
 ## Erweiterungsmöglichkeiten
 
