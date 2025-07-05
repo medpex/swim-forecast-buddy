@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env # Make sure to create a .env file with your environment variables
+    volumes:
+      # Mount the backend code for development to enable hot-reloading
+      # For production, you might remove this volume or have a different compose file.
+      - ./backend:/app/backend
+    # Override command for development with reload
+    # For production, the CMD in the Dockerfile ("uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000") is fine.
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+      args:
+        # This URL should point to the backend service running within the Docker network
+        VITE_API_BASE_URL: http://backend:8000
+    ports:
+      - "8080:80" # Host port 8080 maps to container port 80 (Nginx)
+    depends_on:
+      - backend
+    networks:
+      - app-network
+    restart: unless-stopped
+
+networks:
+  app-network:
+    driver: bridge
