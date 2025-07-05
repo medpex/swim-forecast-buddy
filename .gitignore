@@ -22,3 +22,22 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Environment files
+.env
+.env.*.local
+.env.local
+
+# Python backend specific
+backend/__pycache__/
+backend/models/*.joblib
+backend/.venv/
+backend/venv/
+backend/.pytest_cache/
+backend/instance/ # if using Flask instance folders
+# Add any other Python virtual environment directories you might use
+# .direnv/
+# .eggs/
+# *.egg-info/
+# dist/ (already covered but good to be explicit if backend had its own)
+# build/ (if backend had its own build artifacts)
