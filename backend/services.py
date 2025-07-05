@@ -1,51 +1,47 @@
 import os
 import requests
-from dotenv import load_dotenv
-from supabase import create_client, Client
+from dotenv import load_dotenv # Still useful for OPENWEATHER_API_KEY if run standalone
 from datetime import datetime, timedelta
 import pandas as pd
 from typing import List, Dict, Any, Optional
 
-load_dotenv()
+from sqlalchemy.orm import Session
+from backend.models_db import VisitorDataDb # Import the SQLAlchemy model
+from backend.core.config import settings # To get OPENWEATHER_API_KEY
 
-# Initialize Supabase client
-SUPABASE_URL = os.getenv("SUPABASE_URL")
-SUPABASE_KEY = os.getenv("SUPABASE_KEY")
-
-if not SUPABASE_URL or not SUPABASE_KEY:
-    raise ValueError("SUPABASE_URL and SUPABASE_KEY must be set in the environment variables.")
-
-supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
+load_dotenv() # Loads .env file for standalone script execution
 
 # OpenWeather API settings
-OPENWEATHER_API_KEY = os.getenv("OPENWEATHER_API_KEY")
+OPENWEATHER_API_KEY = settings.OPENWEATHER_API_KEY # Use from central config
 OPENWEATHER_BASE_URL = "https://api.openweathermap.org/data/2.5"
 
 # Cache for OpenWeather API responses
 weather_cache: Dict[str, Dict[str, Any]] = {}
 CACHE_DURATION_SECONDS = 10 * 60  # 10 minutes
 
-def get_historical_visitor_data(limit: int = 1000) -> pd.DataFrame:
+def get_historical_visitor_data(db: Session, limit: int = 1000) -> pd.DataFrame:
     """
-    Fetches historical visitor data from the 'visitor_data' table in Supabase.
-    Orders by date descending and returns a Pandas DataFrame.
+    Fetches historical visitor data from the 'visitor_data' table in PostgreSQL
+    using SQLAlchemy. Orders by date descending and returns a Pandas DataFrame.
     """
     try:
-        response = supabase.table('visitor_data').select('*').order('date', desc=True).limit(limit).execute()
+        query_result = db.query(VisitorDataDb).order_by(VisitorDataDb.date.desc()).limit(limit).all()
 
-        if response.data:
-            df = pd.DataFrame(response.data)
-            df['date'] = pd.to_datetime(df['date']) # Ensure date column is datetime
+        if query_result:
+            # Convert list of SQLAlchemy model instances to list of dicts, then to DataFrame
+            data_list = [
+                {column.name: getattr(row, column.name) for column in row.__table__.columns}
+                for row in query_result
+            ]
+            df = pd.DataFrame(data_list)
+            if 'date' in df.columns:
+                 df['date'] = pd.to_datetime(df['date']) # Ensure date column is datetime
             return df
         else:
-            # Handle cases where response.error might exist or data is empty
-            if hasattr(response, 'error') and response.error:
-                print(f"Error fetching historical visitor data: {response.error}")
-                raise Exception(f"Supabase error: {response.error.message}")
-            return pd.DataFrame() # Return empty DataFrame if no data or error handled by Supabase client
+            return pd.DataFrame() # Return empty DataFrame if no data
 
     except Exception as e:
-        print(f"An exception occurred while fetching historical visitor data: {e}")
+        print(f"An exception occurred while fetching historical visitor data from PostgreSQL: {e}")
         # Depending on desired error handling, you might re-raise or return empty/default
         raise
 
@@ -135,24 +131,20 @@ def get_weather_forecast_data(
 
 # Example usage (for testing this service directly)
 if __name__ == "__main__":
-    print("Testing data access services...")
+    print("Testing data access services (PostgreSQL and OpenWeather)...")
 
-    # Test Supabase connection (requires .env file with credentials)
-    if SUPABASE_URL and SUPABASE_KEY and OPENWEATHER_API_KEY:
-        try:
-            print("\nFetching historical visitor data from Supabase...")
-            historical_data_df = get_historical_visitor_data(limit=5)
-            if not historical_data_df.empty:
-                print(f"Successfully fetched {len(historical_data_df)} historical records.")
-                print(historical_data_df.head())
-            else:
-                print("No historical data returned or table is empty.")
+    # To test get_historical_visitor_data, we need a DB session.
+    # This requires database.py and models_db.py to be correctly set up,
+    # and a running PostgreSQL database as configured in .env (for DATABASE_URL).
 
-        except Exception as e:
-            print(f"Could not fetch historical data: {e}")
-            print("Please ensure your Supabase instance is running, 'visitor_data' table exists, and .env credentials are correct.")
+    # This direct test is more involved now as it requires a live DB session.
+    # For simplicity, direct execution test for get_historical_visitor_data is omitted here.
+    # It will be tested through the FastAPI app or dedicated test scripts with DB setup.
+    print("Skipping direct test of get_historical_visitor_data in services.py __main__ block.")
+    print("Test this function via the FastAPI application or dedicated integration tests.")
 
-        # Test OpenWeather API
+    # Test OpenWeather API (still relevant)
+    if OPENWEATHER_API_KEY and OPENWEATHER_API_KEY != "your_openweather_api_key_placeholder":
         try:
             print("\nFetching weather forecast from OpenWeather API (Berlin, 3 days)...")
             forecast = get_weather_forecast_data(postal_code="10115", num_days=3)
@@ -164,6 +156,6 @@ if __name__ == "__main__":
                 print("No weather forecast data returned.")
         except Exception as e:
             print(f"Could not fetch weather forecast: {e}")
-            print("Please ensure your OPENWEATHER_API_KEY in .env is correct and valid.")
+            print("Please ensure your OPENWEATHER_API_KEY in .env (via core.config) is correct and valid.")
     else:
-        print("Skipping tests as SUPABASE_URL, SUPABASE_KEY, or OPENWEATHER_API_KEY are not set in .env")
+        print("\nSkipping OpenWeather API test as OPENWEATHER_API_KEY is not set or is placeholder.")

@@ -98,7 +98,7 @@ const Dashboard: React.FC = () => {
       
       <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8">
         <div className="md:col-span-1">
-          <LiveVisitorCount />
+          {/* <LiveVisitorCount /> */} {/* Temporarily commented out due to Supabase backend removal */}
         </div>
         <div className="md:col-span-4">
           {visitorData && (
