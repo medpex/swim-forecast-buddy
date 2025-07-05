@@ -67,7 +67,7 @@ const Forecast: React.FC = () => {
       
       <WinterBreakAlert />
       
-      <LiveVisitorCount />
+      {/* <LiveVisitorCount /> */} {/* Temporarily commented out due to Supabase backend removal */}
       
       {isError && (
         <Alert variant="destructive" className="mb-6">
