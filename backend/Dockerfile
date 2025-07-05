@@ -38,6 +38,7 @@ USER appuser
 EXPOSE 8000
 
 # Define the command to run the application
+# Running uvicorn as a module can help with Python's module search path.
 # Uvicorn will look for 'app' in 'backend.main' module.
 # The host 0.0.0.0 is important to make it accessible from outside the container.
-CMD ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["python", "-m", "uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8000"]

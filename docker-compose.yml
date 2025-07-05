@@ -32,7 +32,8 @@ services:
       # This aligns with where the Dockerfile now copies the code.
       - ./backend:/app/backend
     # The command needs to specify the module path backend.main and watch the correct directory for reloads.
-    command: uvicorn backend.main:app --host 0.0.0.0 --port 8000 --reload --reload-dir /app/backend
+    # Using python -m uvicorn for consistency and potentially better path handling.
+    command: python -m uvicorn backend.main:app --host 0.0.0.0 --port 8000 --reload --reload-dir /app/backend
     networks:
       - app-network
     depends_on:
